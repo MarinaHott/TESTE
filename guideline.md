@@ -2,6 +2,7 @@
 
 ## General guidelines
 
+* **Before creating any new interface, always read `/showcase` first.** It contains all base components, spacing rules, border-radius values, shadow tokens, and layout patterns — use it as the single source of truth for building new screens.
 * Use `DM Sans` as the sole typeface across the entire application
 * Always reference CSS custom properties (variables) defined in the `:root` block — never hard-code color or shadow values inline
 * Use flexbox and grid for layout; only fall back to absolute positioning when strictly necessary
