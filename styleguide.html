@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Style Guide — BRIX Templates</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── Reset & Base ─────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      /* Primary */
+      --color-primary:          #4A3AFF;
+
+      /* Gradients */
+      --gradient-vertical:      linear-gradient(180deg, #4A3AFF 0%, #6D3AFF 100%);
+      --gradient-horizontal:    linear-gradient(90deg,  #4A3AFF 0%, #6D3AFF 100%);
+
+      /* Neutral Colors */
+      --color-headings-black:   #0D0A2C;
+      --color-text-gray:        #615E83;
+      --color-600:              #807E9A;
+      --color-500:              #E5E5EF;
+      --color-400:              #F2F1FF;
+      --color-300:              #F7F7FB;
+      --color-200:              #F8F8FF;
+      --color-white:            #FFFFFF;
+
+      /* Purple Shades */
+      --purple-800:  #0B0086;
+      --purple-700:  #0F00B3;
+      --purple-600:  #3B2BEB;
+      --purple-500:  #766AFF;
+      --purple-400:  #A9A2FF;
+      --purple-300:  #C8C3FF;
+      --purple-200:  #E1DEFF;
+      --purple-100:  #F0EEFF;
+
+      /* General Shadows */
+      --shadow-01: 0px 2px 6px 0px rgba(13,10,44,0.08);
+      --shadow-02: 0px 4px 12px 0px rgba(13,10,44,0.06);
+      --shadow-03: 0px 2px 16px 0px rgba(13,10,44,0.12);
+      --shadow-04: 0px 13px 40px 0px rgba(13,10,44,0.22), 0px -8px 18px 0px rgba(13,10,44,0.04);
+      --shadow-05: 0px 10px 30px 0px rgba(74,58,255,0.10), 0px 4px 10px 0px rgba(13,10,44,0.02), 0px -18px 38px 0px rgba(74,58,255,0.04);
+      --shadow-06: 0px 12px 34px 0px rgba(13,10,44,0.08), 0px 34px 26px 0px rgba(13,10,44,0.05);
+
+      /* Button Shadows — Color (purple) */
+      --btn-shadow-color-1: 0px 7px 8px 0px rgba(74,58,255,0.13);
+      --btn-shadow-color-2: 0px 15px 16px 0px rgba(74,58,255,0.22);
+      --btn-shadow-color-3: 0px 15px 30px 0px rgba(74,58,255,0.20);
+
+      /* Button Shadows — Default (neutral) */
+      --btn-shadow-default-1: 0px 8px 8px 0px rgba(13,10,44,0.08);
+      --btn-shadow-default-2: 0px 8px 16px 0px rgba(13,10,44,0.17);
+      --btn-shadow-default-3: 0px 8px 30px 0px rgba(13,10,44,0.15);
+
+      /* Typography */
+      --font-family: 'DM Sans', sans-serif;
+
+      /* Page */
+      --page-bg: #FAFAFC;
+      --section-gap: 80px;
+    }
+
+    body {
+      background-color: var(--page-bg);
+      color: var(--color-headings-black);
+      font-family: var(--font-family);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── Page Header ───────────────────────────────────────────────── */
+    .page-header {
+      background: #fff;
+      box-shadow: 0px 5px 14px 0px rgba(20,20,43,0.05);
+      padding: 32px 110px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .page-header h1 {
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 1.5;
+      color: var(--color-headings-black);
+    }
+
+    /* ─── Layout ────────────────────────────────────────────────────── */
+    .container {
+      max-width: 1220px;
+      margin: 0 auto;
+      padding: 0 110px 120px;
+    }
+
+    .section {
+      padding-top: var(--section-gap);
+    }
+
+    .section-title {
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 48px;
+      color: var(--color-headings-black);
+      margin-bottom: 40px;
+    }
+
+    .section-subtitle {
+      font-size: 44px;
+      font-weight: 700;
+      line-height: 52px;
+      color: var(--color-headings-black);
+      margin-bottom: 60px;
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid var(--color-500);
+      margin: var(--section-gap) 0;
+    }
+
+    /* ─── Color Cards ───────────────────────────────────────────────── */
+    .color-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 28px;
+    }
+
+    .color-card {
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: var(--shadow-01);
+      width: 220px;
+      overflow: hidden;
+    }
+
+    .color-swatch {
+      height: 140px;
+      width: 100%;
+    }
+
+    .color-info {
+      padding: 18px 20px 20px;
+    }
+
+    .color-name {
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.4;
+      color: var(--color-headings-black);
+      margin-bottom: 4px;
+    }
+
+    .color-hex {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 1.3px;
+      text-transform: uppercase;
+      color: var(--color-text-gray);
+    }
+
+    /* gradient swatches */
+    .swatch-gradient-v   { background: var(--gradient-vertical); }
+    .swatch-gradient-h   { background: var(--gradient-horizontal); }
+
+    /* ─── Typography Specimens ──────────────────────────────────────── */
+    .typo-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .typo-table th {
+      text-align: left;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--color-text-gray);
+      padding: 0 0 12px;
+      border-bottom: 1px solid var(--color-500);
+    }
+    .typo-table td {
+      padding: 20px 0;
+      border-bottom: 1px solid var(--color-300);
+      vertical-align: middle;
+    }
+    .typo-table td:first-child { width: 200px; }
+    .typo-meta {
+      font-size: 12px;
+      color: var(--color-text-gray);
+      line-height: 1.6;
+    }
+    .typo-meta strong { color: var(--color-headings-black); font-size: 13px; }
+
+    /* ─── Shadow Cards ──────────────────────────────────────────────── */
+    .shadow-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 32px;
+    }
+
+    .shadow-card {
+      background: #fff;
+      border-radius: 18px;
+      width: 260px;
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .shadow-card-label {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--color-headings-black);
+    }
+
+    /* individual shadow applications */
+    .s-01 { box-shadow: var(--shadow-01); }
+    .s-02 { box-shadow: var(--shadow-02); }
+    .s-03 { box-shadow: var(--shadow-03); }
+    .s-04 { box-shadow: var(--shadow-04); }
+    .s-05 { box-shadow: var(--shadow-05); }
+    .s-06 { box-shadow: var(--shadow-06); }
+
+    .s-bc1 { box-shadow: var(--btn-shadow-color-1); }
+    .s-bc2 { box-shadow: var(--btn-shadow-color-2); }
+    .s-bc3 { box-shadow: var(--btn-shadow-color-3); }
+    .s-bd1 { box-shadow: var(--btn-shadow-default-1); }
+    .s-bd2 { box-shadow: var(--btn-shadow-default-2); }
+    .s-bd3 { box-shadow: var(--btn-shadow-default-3); }
+
+    /* ─── Nav tabs ──────────────────────────────────────────────────── */
+    .nav-tabs {
+      display: flex;
+      gap: 4px;
+      padding: 8px 110px;
+      background: #fff;
+      border-bottom: 1px solid var(--color-500);
+      position: sticky;
+      top: 96px;
+      z-index: 99;
+    }
+    .nav-tab {
+      padding: 8px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-text-gray);
+      text-decoration: none;
+      transition: background 0.15s, color 0.15s;
+    }
+    .nav-tab:hover, .nav-tab.active {
+      background: var(--color-400);
+      color: var(--color-primary);
+    }
+
+    /* ─── Spec badge ────────────────────────────────────────────────── */
+    .spec {
+      display: inline-block;
+      font-size: 11px;
+      background: var(--color-400);
+      color: var(--color-primary);
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: 4px;
+      margin-left: 8px;
+      font-family: monospace;
+      letter-spacing: 0;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!--  PAGE HEADER                                                       -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<header class="page-header">
+  <h1>🎨 Style Guide</h1>
+</header>
+
+<nav class="nav-tabs" aria-label="Style guide sections">
+  <a class="nav-tab active" href="#colors">Colors</a>
+  <a class="nav-tab" href="#typography">Typography</a>
+  <a class="nav-tab" href="#shadows">Shadows</a>
+</nav>
+
+<main class="container">
+
+  <!-- ═════════════════════════════════════════════════════════════════ -->
+  <!--  COLORS                                                          -->
+  <!-- ═════════════════════════════════════════════════════════════════ -->
+  <section id="colors" class="section">
+    <h2 class="section-title">Colors</h2>
+
+    <!-- Primary ─────────────────────────────────────────────────────── -->
+    <h3 class="section-title" style="font-size:20px;margin-bottom:24px;">Primary Colors</h3>
+    <div class="color-grid" style="margin-bottom:48px;">
+      <div class="color-card">
+        <div class="color-swatch" style="background:#4A3AFF;"></div>
+        <div class="color-info">
+          <p class="color-name">Primary Purple</p>
+          <p class="color-hex">#4A3AFF</p>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider" />
+
+    <!-- Gradients ───────────────────────────────────────────────────── -->
+    <h3 class="section-title" style="font-size:20px;margin-bottom:24px;">Gradients</h3>
+    <div class="color-grid" style="margin-bottom:48px;">
+      <div class="color-card">
+        <div class="color-swatch swatch-gradient-v"></div>
+        <div class="color-info">
+          <p class="color-name">Vertical</p>
+          <p class="color-hex">#4A3AFF → #6D3AFF</p>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch swatch-gradient-h"></div>
+        <div class="color-info">
+          <p class="color-name">Horizontal</p>
+          <p class="color-hex">#4A3AFF → #6D3AFF</p>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider" />
+
+    <!-- Neutral Colors ──────────────────────────────────────────────── -->
+    <h3 class="section-title" style="font-size:20px;margin-bottom:24px;">Neutral Colors</h3>
+    <div class="color-grid" style="margin-bottom:48px;">
+      <div class="color-card">
+        <div class="color-swatch" style="background:#0D0A2C;"></div>
+        <div class="color-info">
+          <p class="color-name">Headings Black</p>
+          <p class="color-hex">#0D0A2C</p>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch" style="background:#615E83;"></div>
+        <div class="color-info">
+          <p class="color-name">Text Gray</p>
+          <p class="color-hex">#615E83</p>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch" style="background:#807E9A;"></div>
+        <div class="color-info">
+          <p class="color-name">Color 600</p>
+          <p class="color-hex">#807E9A</p>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch" style="background:#E5E5EF;"></div>
+        <div class="color-info">
+          <p class="color-name">Color 500</p>
+          <p class="color-hex">#E5E5EF</p>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch" style="background:#F2F1FF; border-bottom:1px solid #E5E5EF;"></div>
+        <div class="color-info">
+          <p class="color-name">Color 400</p>
+          <p class="color-hex">#F2F1FF</p>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch" style="background:#F7F7FB; border-bottom:1px solid #E5E5EF;"></div>
+        <div class="color-info">
+          <p class="color-name">Color 300</p>
+          <p class="color-hex">#F7F7FB</p>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch" style="background:#F8F8FF; border-bottom:1px solid #E5E5EF;"></div>
+        <div class="color-info">
+          <p class="color-name">Color 200</p>
+          <p class="color-hex">#F8F8FF</p>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch" style="background:#FFFFFF; border-bottom:1px solid #E5E5EF;"></div>
+        <div class="color-info">
+          <p class="color-name">White</p>
+          <p class="color-hex">#FFFFFF</p>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider" />
+
+    <!-- Purple Shades ───────────────────────────────────────────────── -->
+    <h3 class="section-title" style="font-size:20px;margin-bottom:24px;">Purple Shades</h3>
+    <div class="color-grid">
+      <div class="color-card">
+        <div class="color-swatch" style="background:#0B0086;"></div>
+        <div class="color-info">
+          <p class="color-name">Purple Shade 800</p>
+          <p class="color-hex">#0B0086</p>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch" style="background:#0F00B3;"></div>
+        <div class="color-info">
+          <p class="color-name">Purple Shade 700</p>
+          <p class="color-hex">#0F00B3</p>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch" style="background:#3B2BEB;"></div>
+        <div class="color-info">
+          <p class="color-name">Purple Shade 600</p>
+          <p class="color-hex">#3B2BEB</p>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch" style="background:#766AFF;"></div>
+        <div class="color-info">
+          <p class="color-name">Purple Shade 500</p>
+          <p class="color-hex">#766AFF</p>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch" style="background:#A9A2FF;"></div>
+        <div class="color-info">
+          <p class="color-name">Purple Shade 400</p>
+          <p class="color-hex">#A9A2FF</p>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch" style="background:#C8C3FF;"></div>
+        <div class="color-info">
+          <p class="color-name">Purple Shade 300</p>
+          <p class="color-hex">#C8C3FF</p>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch" style="background:#E1DEFF;"></div>
+        <div class="color-info">
+          <p class="color-name">Purple Shade 200</p>
+          <p class="color-hex">#E1DEFF</p>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch" style="background:#F0EEFF;"></div>
+        <div class="color-info">
+          <p class="color-name">Purple Shade 100</p>
+          <p class="color-hex">#F0EEFF</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- ═════════════════════════════════════════════════════════════════ -->
+  <!--  TYPOGRAPHY                                                       -->
+  <!-- ═════════════════════════════════════════════════════════════════ -->
+  <section id="typography" class="section">
+    <h2 class="section-title">Typography</h2>
+
+    <p style="font-size:14px;color:var(--color-text-gray);margin-bottom:40px;">
+      Font family: <strong style="color:var(--color-headings-black);">DM Sans</strong>
+      &nbsp;·&nbsp; Weights available: Regular (400), Medium (500), Bold (700)
+    </p>
+
+    <!-- Special Headings ─────────────────────────────────────────────── -->
+    <h3 class="section-title" style="font-size:20px;margin-bottom:24px;">Special Headings (Display)</h3>
+    <table class="typo-table" style="margin-bottom:48px;">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Specs</th>
+          <th>Preview</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><p class="typo-meta"><strong>Display 1</strong></p></td>
+          <td><p class="typo-meta">116px / Bold / lh 120</p></td>
+          <td><p style="font-size:clamp(32px,5vw,116px);font-weight:700;line-height:1.03;color:var(--color-headings-black);">Donec et odio.</p></td>
+        </tr>
+        <tr>
+          <td><p class="typo-meta"><strong>Display 2</strong></p></td>
+          <td><p class="typo-meta">88px / Bold / lh 95</p></td>
+          <td><p style="font-size:clamp(28px,4.5vw,88px);font-weight:700;line-height:1.08;color:var(--color-headings-black);">Donec et odio pellent.</p></td>
+        </tr>
+        <tr>
+          <td><p class="typo-meta"><strong>Display 3</strong></p></td>
+          <td><p class="typo-meta">64px / Bold / lh 72</p></td>
+          <td><p style="font-size:clamp(24px,3.5vw,64px);font-weight:700;line-height:1.125;color:var(--color-headings-black);">Donec et odio pellent diam.</p></td>
+        </tr>
+        <tr>
+          <td><p class="typo-meta"><strong>Display 4</strong></p></td>
+          <td><p class="typo-meta">38px / Bold / lh 64</p></td>
+          <td><p style="font-size:38px;font-weight:700;line-height:1.68;color:var(--color-headings-black);">Donec et odio pellent diam.</p></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Headings ─────────────────────────────────────────────────────── -->
+    <h3 class="section-title" style="font-size:20px;margin-bottom:24px;">Headings</h3>
+    <table class="typo-table" style="margin-bottom:48px;">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Specs</th>
+          <th>Preview</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><p class="typo-meta"><strong>H1</strong></p></td>
+          <td><p class="typo-meta">80px / Bold / lh 90</p></td>
+          <td><p style="font-size:clamp(28px,4vw,80px);font-weight:700;line-height:1.125;color:var(--color-headings-black);">Donec et odio pellentesqu diam.</p></td>
+        </tr>
+        <tr>
+          <td><p class="typo-meta"><strong>H2</strong></p></td>
+          <td><p class="typo-meta">64px / Bold / lh 74</p></td>
+          <td><p style="font-size:clamp(24px,3.5vw,64px);font-weight:700;line-height:1.16;color:var(--color-headings-black);">Donec et odio pellentesque diam.</p></td>
+        </tr>
+        <tr>
+          <td><p class="typo-meta"><strong>H3</strong></p></td>
+          <td><p class="typo-meta">42px / Bold / lh 54</p></td>
+          <td><p style="font-size:42px;font-weight:700;line-height:1.29;color:var(--color-headings-black);">Donec et odio pellentesque diam volutpat commodo.</p></td>
+        </tr>
+        <tr>
+          <td><p class="typo-meta"><strong>H4</strong></p></td>
+          <td><p class="typo-meta">38px / Bold / lh 50</p></td>
+          <td><p style="font-size:38px;font-weight:700;line-height:1.32;color:var(--color-headings-black);">Donec et odio pellentesque diam volutpat commodo.</p></td>
+        </tr>
+        <tr>
+          <td><p class="typo-meta"><strong>H5</strong></p></td>
+          <td><p class="typo-meta">32px / Bold / lh 42</p></td>
+          <td><p style="font-size:32px;font-weight:700;line-height:1.31;color:var(--color-headings-black);">Donec et odio pellentesque diam volutpat lorem.</p></td>
+        </tr>
+        <tr>
+          <td><p class="typo-meta"><strong>H6</strong></p></td>
+          <td><p class="typo-meta">28px / Bold / lh 38</p></td>
+          <td><p style="font-size:28px;font-weight:700;line-height:1.36;color:var(--color-headings-black);">Donec et odio pellentesque diam volutpat lorem.</p></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Body ─────────────────────────────────────────────────────────── -->
+    <h3 class="section-title" style="font-size:20px;margin-bottom:24px;">Body</h3>
+    <table class="typo-table" style="margin-bottom:48px;">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Specs</th>
+          <th>Preview</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><p class="typo-meta"><strong>Body Large</strong></p></td>
+          <td><p class="typo-meta">36px / Regular / lh 58</p></td>
+          <td><p style="font-size:36px;font-weight:400;line-height:1.61;color:var(--color-text-gray);">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean commodo ligula eget dolor.</p></td>
+        </tr>
+        <tr>
+          <td><p class="typo-meta"><strong>Body Default</strong></p></td>
+          <td><p class="typo-meta">24px / Regular / lh 42</p></td>
+          <td><p style="font-size:24px;font-weight:400;line-height:1.75;color:var(--color-text-gray);">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean commodo ligula eget dolor.</p></td>
+        </tr>
+        <tr>
+          <td><p class="typo-meta"><strong>Body Small</strong></p></td>
+          <td><p class="typo-meta">18px / Regular / lh 32</p></td>
+          <td><p style="font-size:18px;font-weight:400;line-height:1.78;color:var(--color-text-gray);">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean commodo ligula eget dolor.</p></td>
+        </tr>
+        <tr>
+          <td><p class="typo-meta"><strong>Body Smaller</strong></p></td>
+          <td><p class="typo-meta">16px / Regular / lh 28</p></td>
+          <td><p style="font-size:16px;font-weight:400;line-height:1.75;color:var(--color-text-gray);">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean commodo ligula eget dolor.</p></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Text Single ──────────────────────────────────────────────────── -->
+    <h3 class="section-title" style="font-size:20px;margin-bottom:24px;">Text Single</h3>
+    <table class="typo-table" style="margin-bottom:48px;">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Specs</th>
+          <th>Weights</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><p class="typo-meta"><strong>400</strong></p></td>
+          <td><p class="typo-meta">30px / lh 32</p></td>
+          <td style="display:flex;gap:24px;padding:20px 0;">
+            <span style="font-size:30px;font-weight:400;line-height:32px;color:var(--color-headings-black);">Regular</span>
+            <span style="font-size:30px;font-weight:500;line-height:32px;color:var(--color-headings-black);">Medium</span>
+            <span style="font-size:30px;font-weight:700;line-height:32px;color:var(--color-headings-black);">Bold</span>
+          </td>
+        </tr>
+        <tr>
+          <td><p class="typo-meta"><strong>300</strong></p></td>
+          <td><p class="typo-meta">20px / lh 22</p></td>
+          <td style="display:flex;gap:24px;padding:20px 0;">
+            <span style="font-size:20px;font-weight:400;line-height:22px;color:var(--color-headings-black);">Regular</span>
+            <span style="font-size:20px;font-weight:500;line-height:22px;color:var(--color-headings-black);">Medium</span>
+            <span style="font-size:20px;font-weight:700;line-height:22px;color:var(--color-headings-black);">Bold</span>
+          </td>
+        </tr>
+        <tr>
+          <td><p class="typo-meta"><strong>200</strong></p></td>
+          <td><p class="typo-meta">18px / lh 20</p></td>
+          <td style="display:flex;gap:24px;padding:20px 0;">
+            <span style="font-size:18px;font-weight:400;line-height:20px;color:var(--color-headings-black);">Regular</span>
+            <span style="font-size:18px;font-weight:500;line-height:20px;color:var(--color-headings-black);">Medium</span>
+            <span style="font-size:18px;font-weight:700;line-height:20px;color:var(--color-headings-black);">Bold</span>
+          </td>
+        </tr>
+        <tr>
+          <td><p class="typo-meta"><strong>100</strong></p></td>
+          <td><p class="typo-meta">16px / lh 18</p></td>
+          <td style="display:flex;gap:24px;padding:20px 0;">
+            <span style="font-size:16px;font-weight:400;line-height:18px;color:var(--color-headings-black);">Regular</span>
+            <span style="font-size:16px;font-weight:500;line-height:18px;color:var(--color-headings-black);">Medium</span>
+            <span style="font-size:16px;font-weight:700;line-height:18px;color:var(--color-headings-black);">Bold</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Text Single Uppercase ────────────────────────────────────────── -->
+    <h3 class="section-title" style="font-size:20px;margin-bottom:24px;">Text Single Uppercase <span class="spec">letter-spacing: 10</span></h3>
+    <table class="typo-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Specs</th>
+          <th>Weights</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><p class="typo-meta"><strong>400</strong></p></td>
+          <td><p class="typo-meta">30px / lh 32 / ls 10</p></td>
+          <td style="display:flex;gap:24px;padding:20px 0;">
+            <span style="font-size:30px;font-weight:400;line-height:32px;letter-spacing:10px;text-transform:uppercase;color:var(--color-headings-black);">Aa</span>
+            <span style="font-size:30px;font-weight:500;line-height:32px;letter-spacing:10px;text-transform:uppercase;color:var(--color-headings-black);">Aa</span>
+            <span style="font-size:30px;font-weight:700;line-height:32px;letter-spacing:10px;text-transform:uppercase;color:var(--color-headings-black);">Aa</span>
+          </td>
+        </tr>
+        <tr>
+          <td><p class="typo-meta"><strong>300</strong></p></td>
+          <td><p class="typo-meta">20px / lh 22 / ls 10</p></td>
+          <td style="display:flex;gap:24px;padding:20px 0;">
+            <span style="font-size:20px;font-weight:400;line-height:22px;letter-spacing:10px;text-transform:uppercase;color:var(--color-headings-black);">Aa</span>
+            <span style="font-size:20px;font-weight:500;line-height:22px;letter-spacing:10px;text-transform:uppercase;color:var(--color-headings-black);">Aa</span>
+            <span style="font-size:20px;font-weight:700;line-height:22px;letter-spacing:10px;text-transform:uppercase;color:var(--color-headings-black);">Aa</span>
+          </td>
+        </tr>
+        <tr>
+          <td><p class="typo-meta"><strong>200</strong></p></td>
+          <td><p class="typo-meta">18px / lh 20 / ls 10</p></td>
+          <td style="display:flex;gap:24px;padding:20px 0;">
+            <span style="font-size:18px;font-weight:400;line-height:20px;letter-spacing:10px;text-transform:uppercase;color:var(--color-headings-black);">Aa</span>
+            <span style="font-size:18px;font-weight:500;line-height:20px;letter-spacing:10px;text-transform:uppercase;color:var(--color-headings-black);">Aa</span>
+            <span style="font-size:18px;font-weight:700;line-height:20px;letter-spacing:10px;text-transform:uppercase;color:var(--color-headings-black);">Aa</span>
+          </td>
+        </tr>
+        <tr>
+          <td><p class="typo-meta"><strong>100</strong></p></td>
+          <td><p class="typo-meta">16px / lh 18 / ls 10</p></td>
+          <td style="display:flex;gap:24px;padding:20px 0;">
+            <span style="font-size:16px;font-weight:400;line-height:18px;letter-spacing:10px;text-transform:uppercase;color:var(--color-headings-black);">Aa</span>
+            <span style="font-size:16px;font-weight:500;line-height:18px;letter-spacing:10px;text-transform:uppercase;color:var(--color-headings-black);">Aa</span>
+            <span style="font-size:16px;font-weight:700;line-height:18px;letter-spacing:10px;text-transform:uppercase;color:var(--color-headings-black);">Aa</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- ═════════════════════════════════════════════════════════════════ -->
+  <!--  SHADOWS                                                          -->
+  <!-- ═════════════════════════════════════════════════════════════════ -->
+  <section id="shadows" class="section">
+    <h2 class="section-title">Shadows</h2>
+
+    <!-- General Shadows ─────────────────────────────────────────────── -->
+    <h3 class="section-title" style="font-size:20px;margin-bottom:32px;">General Shadows</h3>
+    <div class="shadow-grid" style="margin-bottom:56px;">
+      <div class="shadow-card s-01"><span class="shadow-card-label">Shadow 01</span></div>
+      <div class="shadow-card s-02"><span class="shadow-card-label">Shadow 02</span></div>
+      <div class="shadow-card s-03"><span class="shadow-card-label">Shadow 03</span></div>
+      <div class="shadow-card s-04"><span class="shadow-card-label">Shadow 04</span></div>
+      <div class="shadow-card s-05"><span class="shadow-card-label">Shadow 05</span></div>
+      <div class="shadow-card s-06"><span class="shadow-card-label">Shadow 06</span></div>
+    </div>
+
+    <!-- Shadow reference table -->
+    <table class="typo-table" style="margin-bottom:56px;">
+      <thead>
+        <tr>
+          <th style="width:140px;">Name</th>
+          <th>CSS Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><p class="typo-meta"><strong>Shadow 01</strong></p></td>
+          <td><code style="font-size:12px;color:var(--color-text-gray);">0px 2px 6px rgba(13,10,44,0.08)</code></td>
+        </tr>
+        <tr>
+          <td><p class="typo-meta"><strong>Shadow 02</strong></p></td>
+          <td><code style="font-size:12px;color:var(--color-text-gray);">0px 4px 12px rgba(13,10,44,0.06)</code></td>
+        </tr>
+        <tr>
+          <td><p class="typo-meta"><strong>Shadow 03</strong></p></td>
+          <td><code style="font-size:12px;color:var(--color-text-gray);">0px 2px 16px rgba(13,10,44,0.12)</code></td>
+        </tr>
+        <tr>
+          <td><p class="typo-meta"><strong>Shadow 04</strong></p></td>
+          <td><code style="font-size:12px;color:var(--color-text-gray);">0px 13px 40px rgba(13,10,44,0.22), 0px -8px 18px rgba(13,10,44,0.04)</code></td>
+        </tr>
+        <tr>
+          <td><p class="typo-meta"><strong>Shadow 05</strong></p></td>
+          <td><code style="font-size:12px;color:var(--color-text-gray);">0px 10px 30px rgba(74,58,255,0.10), 0px 4px 10px rgba(13,10,44,0.02), 0px -18px 38px rgba(74,58,255,0.04)</code></td>
+        </tr>
+        <tr>
+          <td><p class="typo-meta"><strong>Shadow 06</strong></p></td>
+          <td><code style="font-size:12px;color:var(--color-text-gray);">0px 12px 34px rgba(13,10,44,0.08), 0px 34px 26px rgba(13,10,44,0.05)</code></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <hr class="divider" />
+
+    <!-- Button Shadows ───────────────────────────────────────────────── -->
+    <h3 class="section-title" style="font-size:20px;margin-bottom:32px;">Button Shadows</h3>
+    <div class="shadow-grid" style="margin-bottom:56px;">
+      <div class="shadow-card s-bc1"><span class="shadow-card-label">Button Color 01</span></div>
+      <div class="shadow-card s-bc2"><span class="shadow-card-label">Button Color 02</span></div>
+      <div class="shadow-card s-bc3"><span class="shadow-card-label">Button Color 03</span></div>
+      <div class="shadow-card s-bd1"><span class="shadow-card-label">Button Default 01</span></div>
+      <div class="shadow-card s-bd2"><span class="shadow-card-label">Button Default 02</span></div>
+      <div class="shadow-card s-bd3"><span class="shadow-card-label">Button Default 03</span></div>
+    </div>
+
+    <!-- Button shadow reference table -->
+    <table class="typo-table">
+      <thead>
+        <tr>
+          <th style="width:180px;">Name</th>
+          <th>CSS Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><p class="typo-meta"><strong>Button Color 01</strong></p></td>
+          <td><code style="font-size:12px;color:var(--color-text-gray);">0px 7px 8px rgba(74,58,255,0.13)</code></td>
+        </tr>
+        <tr>
+          <td><p class="typo-meta"><strong>Button Color 02</strong></p></td>
+          <td><code style="font-size:12px;color:var(--color-text-gray);">0px 15px 16px rgba(74,58,255,0.22)</code></td>
+        </tr>
+        <tr>
+          <td><p class="typo-meta"><strong>Button Color 03</strong></p></td>
+          <td><code style="font-size:12px;color:var(--color-text-gray);">0px 15px 30px rgba(74,58,255,0.20)</code></td>
+        </tr>
+        <tr>
+          <td><p class="typo-meta"><strong>Button Default 01</strong></p></td>
+          <td><code style="font-size:12px;color:var(--color-text-gray);">0px 8px 8px rgba(13,10,44,0.08)</code></td>
+        </tr>
+        <tr>
+          <td><p class="typo-meta"><strong>Button Default 02</strong></p></td>
+          <td><code style="font-size:12px;color:var(--color-text-gray);">0px 8px 16px rgba(13,10,44,0.17)</code></td>
+        </tr>
+        <tr>
+          <td><p class="typo-meta"><strong>Button Default 03</strong></p></td>
+          <td><code style="font-size:12px;color:var(--color-text-gray);">0px 8px 30px rgba(13,10,44,0.15)</code></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+</main>
+
+<script>
+  // Smooth active tab highlight on scroll
+  const tabs = document.querySelectorAll('.nav-tab');
+  const sections = document.querySelectorAll('section[id]');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        tabs.forEach(t => t.classList.remove('active'));
+        const active = document.querySelector(`.nav-tab[href="#${entry.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { threshold: 0.3 });
+  sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
