@@ -1,0 +1,1742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Showcase — BRIX Templates</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ═══════════════════════════════════════════════════════════════
+       DESIGN TOKENS
+    ═══════════════════════════════════════════════════════════════ */
+    :root {
+      /* ── Colors ─────────────────────────────────────────── */
+      --color-primary:        #4A3AFF;
+      --color-primary-dark:   #3B2BEB;
+      --color-headings-black: #0D0A2C;
+      --color-text-gray:      #615E83;
+      --color-600:            #807E9A;
+      --color-500:            #E5E5EF;
+      --color-400:            #F2F1FF;
+      --color-300:            #F7F7FB;
+      --color-200:            #F8F8FF;
+      --color-white:          #FFFFFF;
+      --purple-800:  #0B0086;
+      --purple-700:  #0F00B3;
+      --purple-600:  #3B2BEB;
+      --purple-500:  #766AFF;
+      --purple-400:  #A9A2FF;
+      --purple-300:  #C8C3FF;
+      --purple-200:  #E1DEFF;
+      --purple-100:  #F0EEFF;
+
+      /* ── Gradients ──────────────────────────────────────── */
+      --gradient-vertical:    linear-gradient(180deg, #4A3AFF 0%, #6D3AFF 100%);
+      --gradient-horizontal:  linear-gradient(90deg,  #4A3AFF 0%, #6D3AFF 100%);
+
+      /* ── Typography ─────────────────────────────────────── */
+      --font:  'DM Sans', sans-serif;
+
+      /* ── Spacing (base-8 scale) ─────────────────────────── */
+      --space-1:   4px;
+      --space-2:   8px;
+      --space-3:  16px;
+      --space-4:  24px;
+      --space-5:  32px;
+      --space-6:  40px;
+      --space-7:  48px;
+      --space-8:  56px;
+      --space-9:  64px;
+      --space-10: 80px;
+      --space-11: 96px;
+      --space-12: 120px;
+
+      /* ── Border Radius ──────────────────────────────────── */
+      --radius-sm:   6px;
+      --radius-md:   8px;
+      --radius-lg:  18px;
+      --radius-xl:  24px;
+      --radius-full: 9999px;
+
+      /* ── Shadows (General) ──────────────────────────────── */
+      --shadow-01: 0px 2px 6px 0px rgba(13,10,44,0.08);
+      --shadow-02: 0px 4px 12px 0px rgba(13,10,44,0.06);
+      --shadow-03: 0px 2px 16px 0px rgba(13,10,44,0.12);
+      --shadow-04: 0px 13px 40px 0px rgba(13,10,44,0.22), 0px -8px 18px 0px rgba(13,10,44,0.04);
+      --shadow-05: 0px 10px 30px 0px rgba(74,58,255,0.10), 0px 4px 10px 0px rgba(13,10,44,0.02), 0px -18px 38px 0px rgba(74,58,255,0.04);
+      --shadow-06: 0px 12px 34px 0px rgba(13,10,44,0.08), 0px 34px 26px 0px rgba(13,10,44,0.05);
+
+      /* ── Shadows (Buttons) ──────────────────────────────── */
+      --btn-shadow-color-1:   0px 7px 8px 0px rgba(74,58,255,0.13);
+      --btn-shadow-color-2:   0px 15px 16px 0px rgba(74,58,255,0.22);
+      --btn-shadow-color-3:   0px 15px 30px 0px rgba(74,58,255,0.20);
+      --btn-shadow-default-1: 0px 8px 8px 0px rgba(13,10,44,0.08);
+      --btn-shadow-default-2: 0px 8px 16px 0px rgba(13,10,44,0.17);
+      --btn-shadow-default-3: 0px 8px 30px 0px rgba(13,10,44,0.15);
+
+      /* ── Transition ─────────────────────────────────────── */
+      --transition: 0.2s ease;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       RESET & BASE
+    ═══════════════════════════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--color-300);
+      color: var(--color-headings-black);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img { display: block; max-width: 100%; }
+    a   { color: inherit; text-decoration: none; }
+
+    /* ═══════════════════════════════════════════════════════════════
+       UTILITY CLASSES
+    ═══════════════════════════════════════════════════════════════ */
+    .container {
+      max-width: 1220px;
+      margin: 0 auto;
+      padding: 0 var(--space-5);
+    }
+
+    /* Section wrapper */
+    .section {
+      padding: var(--space-10) 0;
+    }
+
+    .section--dark {
+      background: var(--color-headings-black);
+      color: var(--color-white);
+    }
+
+    .section--purple {
+      background: var(--gradient-vertical);
+      color: var(--color-white);
+    }
+
+    .section--white {
+      background: var(--color-white);
+    }
+
+    .section--light {
+      background: var(--color-200);
+    }
+
+    /* Section header */
+    .section-label {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 10px;
+      text-transform: uppercase;
+      color: var(--color-primary);
+      margin-bottom: var(--space-3);
+    }
+
+    .section-label--white {
+      color: var(--purple-300);
+    }
+
+    .section-title {
+      font-size: 42px;
+      font-weight: 700;
+      line-height: 1.29;
+      color: var(--color-headings-black);
+      margin-bottom: var(--space-4);
+    }
+
+    .section-title--white {
+      color: var(--color-white);
+    }
+
+    .section-desc {
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 1.78;
+      color: var(--color-text-gray);
+      max-width: 640px;
+    }
+
+    .section-desc--white {
+      color: var(--purple-200);
+    }
+
+    .section-header {
+      margin-bottom: var(--space-7);
+    }
+
+    /* Grid helpers */
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-5); }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-5); }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-4); }
+
+    /* Flex helpers */
+    .flex        { display: flex; }
+    .flex-center { display: flex; align-items: center; justify-content: center; }
+    .flex-between{ display: flex; align-items: center; justify-content: space-between; }
+    .gap-2  { gap: var(--space-2); }
+    .gap-3  { gap: var(--space-3); }
+    .gap-4  { gap: var(--space-4); }
+    .gap-5  { gap: var(--space-5); }
+
+    /* ═══════════════════════════════════════════════════════════════
+       ANNOTATION BADGE — shows token name on hover
+    ═══════════════════════════════════════════════════════════════ */
+    .token-badge {
+      display: inline-block;
+      font-size: 10px;
+      font-family: monospace;
+      background: var(--color-primary);
+      color: #fff;
+      padding: 2px 6px;
+      border-radius: var(--radius-sm);
+      margin-left: 6px;
+      vertical-align: middle;
+      opacity: 0.7;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       NAVIGATION
+    ═══════════════════════════════════════════════════════════════ */
+    .navbar {
+      /* spacing: 24px top/bottom, 40px sides */
+      padding: var(--space-4) 0;
+      background: var(--color-white);
+      box-shadow: var(--shadow-01);    /* --shadow-01 */
+      position: sticky;
+      top: 0;
+      z-index: 200;
+    }
+
+    .navbar__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .navbar__logo {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--color-headings-black);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .navbar__logo-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-md);   /* --radius-md: 8px */
+      background: var(--gradient-vertical);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 16px;
+      box-shadow: var(--btn-shadow-color-1);
+    }
+
+    .navbar__links {
+      display: flex;
+      align-items: center;
+      gap: var(--space-6);    /* --space-6: 40px */
+      list-style: none;
+    }
+
+    .navbar__links a {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--color-text-gray);
+      transition: color var(--transition);
+    }
+
+    .navbar__links a:hover { color: var(--color-primary); }
+
+    .navbar__cta {
+      display: flex;
+      gap: var(--space-3);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       BUTTONS
+    ═══════════════════════════════════════════════════════════════ */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: 14px var(--space-4);   /* vertical 14px, horizontal 24px */
+      border-radius: var(--radius-md); /* --radius-md: 8px */
+      font-size: 16px;
+      font-weight: 700;
+      font-family: var(--font);
+      cursor: pointer;
+      border: none;
+      transition: box-shadow var(--transition), transform var(--transition);
+    }
+
+    .btn--primary {
+      background: var(--gradient-vertical);
+      color: #fff;
+      box-shadow: var(--btn-shadow-color-1);
+    }
+    .btn--primary:hover {
+      box-shadow: var(--btn-shadow-color-2);
+      transform: translateY(-2px);
+    }
+
+    .btn--secondary {
+      background: transparent;
+      color: var(--color-primary);
+      border: 2px solid var(--color-primary);
+      box-shadow: var(--btn-shadow-default-1);
+    }
+    .btn--secondary:hover {
+      box-shadow: var(--btn-shadow-default-2);
+      transform: translateY(-2px);
+    }
+
+    .btn--ghost {
+      background: var(--color-400);
+      color: var(--color-primary);
+    }
+    .btn--ghost:hover {
+      background: var(--purple-200);
+    }
+
+    .btn--lg {
+      padding: 18px 32px;
+      font-size: 18px;
+      border-radius: var(--radius-md);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       HERO / COVER
+    ═══════════════════════════════════════════════════════════════ */
+    .hero {
+      background: var(--color-headings-black);
+      min-height: 560px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .hero__content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: var(--space-12) var(--space-10) var(--space-12) 110px;
+    }
+
+    .hero__eyebrow {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--purple-300);
+      margin-bottom: var(--space-4);
+      letter-spacing: 2px;
+    }
+
+    .hero__title {
+      font-size: 80px;
+      font-weight: 700;
+      line-height: 1.1;
+      color: var(--color-white);
+      margin-bottom: var(--space-5);
+    }
+
+    .hero__desc {
+      font-size: 18px;
+      line-height: 1.78;
+      color: var(--purple-300);
+      margin-bottom: var(--space-7);
+      max-width: 480px;
+    }
+
+    .hero__actions {
+      display: flex;
+      gap: var(--space-3);
+    }
+
+    .hero__image {
+      background: var(--color-500);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero__image-placeholder {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--purple-600) 0%, var(--purple-800) 100%);
+      opacity: 0.3;
+    }
+
+    .hero__image-label {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.4);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       OVERVIEW / STATS
+    ═══════════════════════════════════════════════════════════════ */
+    .stat-card {
+      background: var(--color-white);
+      border-radius: var(--radius-lg);       /* --radius-lg: 18px */
+      padding: var(--space-6) var(--space-5); /* 40px 32px */
+      box-shadow: var(--shadow-01);
+      transition: box-shadow var(--transition), transform var(--transition);
+    }
+
+    .stat-card:hover {
+      box-shadow: var(--shadow-03);
+      transform: translateY(-2px);
+    }
+
+    .stat-card__number {
+      font-size: 64px;
+      font-weight: 700;
+      line-height: 1;
+      color: var(--color-primary);
+      margin-bottom: var(--space-2);
+    }
+
+    .stat-card__label {
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--color-text-gray);
+    }
+
+    .stat-card__desc {
+      font-size: 14px;
+      color: var(--color-600);
+      margin-top: var(--space-2);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       ABOUT — split layout
+    ═══════════════════════════════════════════════════════════════ */
+    .about-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-10);
+      align-items: center;
+    }
+
+    .about-image {
+      border-radius: var(--radius-xl);    /* --radius-xl: 24px */
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      background: var(--color-400);
+      box-shadow: var(--shadow-04);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-text-gray);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    .about-features {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+      margin-top: var(--space-5);
+    }
+
+    .about-feature {
+      display: flex;
+      gap: var(--space-3);
+      align-items: flex-start;
+    }
+
+    .about-feature__icon {
+      width: 44px;
+      height: 44px;
+      min-width: 44px;
+      border-radius: var(--radius-md);
+      background: var(--color-400);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .about-feature__title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--color-headings-black);
+      margin-bottom: 4px;
+    }
+
+    .about-feature__desc {
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--color-text-gray);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       SERVICES — cards
+    ═══════════════════════════════════════════════════════════════ */
+    .service-card {
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      box-shadow: var(--shadow-01);
+      transition: box-shadow var(--transition), transform var(--transition);
+    }
+
+    .service-card:hover {
+      box-shadow: var(--shadow-05);     /* purple accent shadow on hover */
+      transform: translateY(-4px);
+    }
+
+    .service-card__icon {
+      width: 56px;
+      height: 56px;
+      border-radius: var(--radius-md);
+      background: var(--gradient-vertical);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin-bottom: var(--space-4);
+      box-shadow: var(--btn-shadow-color-1);
+    }
+
+    .service-card__title {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--color-headings-black);
+      margin-bottom: var(--space-2);
+    }
+
+    .service-card__desc {
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--color-text-gray);
+    }
+
+    .service-card__link {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-1);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--color-primary);
+      margin-top: var(--space-3);
+      transition: gap var(--transition);
+    }
+
+    .service-card__link:hover { gap: var(--space-2); }
+
+    /* ═══════════════════════════════════════════════════════════════
+       PORTFOLIO — grid
+    ═══════════════════════════════════════════════════════════════ */
+    .portfolio-item {
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      background: var(--color-400);
+      box-shadow: var(--shadow-02);
+      position: relative;
+      aspect-ratio: 4/3;
+      transition: box-shadow var(--transition), transform var(--transition);
+    }
+
+    .portfolio-item:hover {
+      box-shadow: var(--shadow-04);
+      transform: translateY(-4px);
+    }
+
+    .portfolio-item__overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(13,10,44,0.85) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity var(--transition);
+      display: flex;
+      align-items: flex-end;
+      padding: var(--space-4);
+    }
+
+    .portfolio-item:hover .portfolio-item__overlay { opacity: 1; }
+
+    .portfolio-item__label {
+      color: var(--color-white);
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .portfolio-item__cat {
+      font-size: 12px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--purple-300);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .portfolio-item__bg {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-text-gray);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       TEAM — profile cards
+    ═══════════════════════════════════════════════════════════════ */
+    .team-card {
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-01);
+      transition: box-shadow var(--transition), transform var(--transition);
+      text-align: center;
+    }
+
+    .team-card:hover {
+      box-shadow: var(--shadow-03);
+      transform: translateY(-4px);
+    }
+
+    .team-card__avatar {
+      width: 100%;
+      aspect-ratio: 1;
+      background: var(--color-400);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+    }
+
+    .team-card__body {
+      padding: var(--space-4);
+    }
+
+    .team-card__name {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--color-headings-black);
+      margin-bottom: 4px;
+    }
+
+    .team-card__role {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-primary);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: var(--space-3);
+    }
+
+    .team-card__bio {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--color-text-gray);
+    }
+
+    .team-card__socials {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-2);
+      margin-top: var(--space-3);
+    }
+
+    .social-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-sm);
+      background: var(--color-400);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: var(--color-primary);
+      transition: background var(--transition);
+    }
+
+    .social-icon:hover { background: var(--purple-200); }
+
+    /* ═══════════════════════════════════════════════════════════════
+       GALLERY
+    ═══════════════════════════════════════════════════════════════ */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(2, 200px);
+      gap: var(--space-3);
+    }
+
+    .gallery-grid .gallery-item:first-child {
+      grid-column: span 2;
+      grid-row: span 2;
+    }
+
+    .gallery-item {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: var(--color-400);
+      box-shadow: var(--shadow-01);
+      transition: box-shadow var(--transition), transform var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--color-text-gray);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .gallery-item:hover {
+      box-shadow: var(--shadow-03);
+      transform: scale(1.02);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       TESTIMONIALS
+    ═══════════════════════════════════════════════════════════════ */
+    .testimonial-card {
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      box-shadow: var(--shadow-02);
+      transition: box-shadow var(--transition), transform var(--transition);
+      position: relative;
+    }
+
+    .testimonial-card:hover {
+      box-shadow: var(--shadow-05);
+      transform: translateY(-4px);
+    }
+
+    .testimonial-card__quote {
+      font-size: 32px;
+      line-height: 1;
+      color: var(--color-primary);
+      font-weight: 700;
+      margin-bottom: var(--space-3);
+      opacity: 0.4;
+    }
+
+    .testimonial-card__text {
+      font-size: 16px;
+      line-height: 1.75;
+      color: var(--color-text-gray);
+      margin-bottom: var(--space-4);
+    }
+
+    .testimonial-card__author {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .testimonial-card__avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-full);
+      background: var(--gradient-vertical);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .testimonial-card__name {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--color-headings-black);
+    }
+
+    .testimonial-card__company {
+      font-size: 13px;
+      color: var(--color-text-gray);
+    }
+
+    .stars {
+      color: #F5A623;
+      font-size: 14px;
+      margin-bottom: var(--space-2);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       TIMELINE
+    ═══════════════════════════════════════════════════════════════ */
+    .timeline {
+      position: relative;
+      padding-left: var(--space-7);
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 16px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--color-500);
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: var(--space-6);
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: calc(-1 * var(--space-7) + 8px);
+      top: 6px;
+      width: 18px;
+      height: 18px;
+      border-radius: var(--radius-full);
+      background: var(--color-primary);
+      border: 3px solid var(--color-white);
+      box-shadow: var(--shadow-01);
+    }
+
+    .timeline-item--active::before {
+      background: var(--gradient-vertical);
+      box-shadow: var(--btn-shadow-color-1);
+    }
+
+    .timeline-item__year {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--color-primary);
+      margin-bottom: 4px;
+    }
+
+    .timeline-item__title {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--color-headings-black);
+      margin-bottom: var(--space-2);
+    }
+
+    .timeline-item__desc {
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--color-text-gray);
+      max-width: 540px;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       CHARTS / PROGRESS
+    ═══════════════════════════════════════════════════════════════ */
+    .progress-item {
+      margin-bottom: var(--space-4);
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: var(--space-2);
+    }
+
+    .progress-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--color-headings-black);
+    }
+
+    .progress-pct {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--color-primary);
+    }
+
+    .progress-track {
+      height: 8px;
+      background: var(--color-400);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: var(--radius-full);
+      background: var(--gradient-horizontal);
+      box-shadow: var(--btn-shadow-color-1);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       PRICING
+    ═══════════════════════════════════════════════════════════════ */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-4);
+    }
+
+    .pricing-card {
+      background: var(--color-white);
+      border-radius: var(--radius-xl);   /* --radius-xl: 24px */
+      padding: var(--space-6);
+      box-shadow: var(--shadow-02);
+      transition: box-shadow var(--transition), transform var(--transition);
+    }
+
+    .pricing-card:hover {
+      box-shadow: var(--shadow-04);
+      transform: translateY(-4px);
+    }
+
+    .pricing-card--featured {
+      background: var(--gradient-vertical);
+      color: var(--color-white);
+      box-shadow: var(--shadow-05);
+    }
+
+    .pricing-card--featured:hover {
+      box-shadow: var(--shadow-05);
+    }
+
+    .pricing-card__badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      background: var(--color-400);
+      color: var(--color-primary);
+      margin-bottom: var(--space-4);
+    }
+
+    .pricing-card--featured .pricing-card__badge {
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+    }
+
+    .pricing-card__name {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: var(--space-2);
+    }
+
+    .pricing-card__price {
+      font-size: 56px;
+      font-weight: 700;
+      line-height: 1;
+      color: var(--color-headings-black);
+      margin-bottom: 4px;
+    }
+
+    .pricing-card--featured .pricing-card__price { color: #fff; }
+
+    .pricing-card__price sup {
+      font-size: 24px;
+      vertical-align: super;
+    }
+
+    .pricing-card__period {
+      font-size: 14px;
+      color: var(--color-text-gray);
+      margin-bottom: var(--space-4);
+    }
+
+    .pricing-card--featured .pricing-card__period { color: var(--purple-200); }
+
+    .pricing-divider {
+      border: none;
+      border-top: 1px solid var(--color-500);
+      margin: var(--space-4) 0;
+    }
+
+    .pricing-card--featured .pricing-divider {
+      border-color: rgba(255,255,255,0.15);
+    }
+
+    .pricing-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+      margin-bottom: var(--space-5);
+    }
+
+    .pricing-features li {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: 15px;
+      color: var(--color-text-gray);
+    }
+
+    .pricing-card--featured .pricing-features li { color: var(--purple-200); }
+
+    .pricing-features .check {
+      width: 20px;
+      height: 20px;
+      border-radius: var(--radius-sm);
+      background: var(--color-400);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      color: var(--color-primary);
+      flex-shrink: 0;
+    }
+
+    .pricing-card--featured .pricing-features .check {
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       ENDING / FOOTER CTA
+    ═══════════════════════════════════════════════════════════════ */
+    .cta-band {
+      background: var(--color-headings-black);
+      padding: var(--space-12) 0;
+      text-align: center;
+    }
+
+    .cta-band__eyebrow {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      color: var(--purple-400);
+      margin-bottom: var(--space-3);
+    }
+
+    .cta-band__title {
+      font-size: 64px;
+      font-weight: 700;
+      line-height: 1.1;
+      color: #fff;
+      max-width: 780px;
+      margin: 0 auto var(--space-5);
+    }
+
+    .cta-band__desc {
+      font-size: 18px;
+      line-height: 1.78;
+      color: var(--purple-300);
+      max-width: 560px;
+      margin: 0 auto var(--space-7);
+    }
+
+    .footer {
+      background: var(--color-headings-black);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: var(--space-6) 0;
+    }
+
+    .footer__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer__logo {
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .footer__links {
+      display: flex;
+      gap: var(--space-5);
+      list-style: none;
+    }
+
+    .footer__links a {
+      font-size: 14px;
+      color: var(--color-600);
+      transition: color var(--transition);
+    }
+
+    .footer__links a:hover { color: #fff; }
+
+    .footer__copy {
+      font-size: 13px;
+      color: var(--color-600);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       TOKEN ANNOTATION SIDEBAR (hover overlay)
+    ═══════════════════════════════════════════════════════════════ */
+    .anno {
+      position: relative;
+    }
+
+    .anno::after {
+      content: attr(data-token);
+      position: absolute;
+      top: -28px;
+      left: 0;
+      background: var(--color-headings-black);
+      color: var(--purple-300);
+      font-size: 10px;
+      font-family: monospace;
+      padding: 3px 7px;
+      border-radius: var(--radius-sm);
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--transition);
+      z-index: 100;
+    }
+
+    .anno:hover::after { opacity: 1; }
+
+    /* ═══════════════════════════════════════════════════════════════
+       SECTION RULE CALLOUTS
+    ═══════════════════════════════════════════════════════════════ */
+    .rule-strip {
+      background: var(--color-400);
+      border-left: 3px solid var(--color-primary);
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      padding: var(--space-3) var(--space-4);
+      margin-bottom: var(--space-5);
+      font-size: 13px;
+      color: var(--color-text-gray);
+      font-family: monospace;
+    }
+
+    .rule-strip strong {
+      color: var(--color-headings-black);
+      font-family: var(--font);
+    }
+
+    .rule-strip code {
+      background: var(--color-white);
+      padding: 2px 5px;
+      border-radius: 4px;
+      color: var(--color-primary);
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ─────────────────────────────────────────────────────────────── -->
+  <!-- NAVIGATION                                                       -->
+  <!-- ─────────────────────────────────────────────────────────────── -->
+  <nav class="navbar anno" data-token="--shadow-01 · padding: --space-4">
+    <div class="container">
+      <div class="navbar__inner">
+        <a href="#" class="navbar__logo">
+          <span class="navbar__logo-icon anno" data-token="--radius-md · --btn-shadow-color-1">⬡</span>
+          BRIX
+        </a>
+        <ul class="navbar__links">
+          <li><a href="#overview">Overview</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#portfolio">Portfolio</a></li>
+          <li><a href="#team">Team</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+        </ul>
+        <div class="navbar__cta">
+          <button class="btn btn--ghost anno" data-token="--radius-md · bg: --color-400">Log in</button>
+          <button class="btn btn--primary anno" data-token="--gradient-vertical · --btn-shadow-color-1">Get started</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ─────────────────────────────────────────────────────────────── -->
+  <!-- COVER / HERO                                                     -->
+  <!-- ─────────────────────────────────────────────────────────────── -->
+  <section class="hero" aria-label="Cover">
+    <div class="hero__content">
+      <p class="hero__eyebrow">👋 Hi everyone</p>
+      <h1 class="hero__title anno" data-token="H1 · 80px/700 · --color-white">Business<br>Presentation</h1>
+      <p class="hero__desc anno" data-token="Body Small · 18px/400 · --purple-300">A complete design system built on DM Sans, primary purple, and a base-8 spacing scale.</p>
+      <div class="hero__actions">
+        <button class="btn btn--primary btn--lg anno" data-token="--btn-shadow-color-2 on hover">Explore showcase</button>
+        <button class="btn btn--secondary btn--lg" style="border-color:rgba(255,255,255,0.2);color:#fff;">Learn more</button>
+      </div>
+    </div>
+    <div class="hero__image">
+      <div class="hero__image-placeholder"></div>
+      <div class="hero__image-label">Image area</div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────────── -->
+  <!-- OVERVIEW / STATS                                                 -->
+  <!-- ─────────────────────────────────────────────────────────────── -->
+  <section id="overview" class="section section--white">
+    <div class="container">
+      <div class="rule-strip">
+        <strong>Overview</strong> · Section padding: <code>--space-10 (80px)</code> ·
+        Cards: <code>--radius-lg (18px)</code> · <code>--shadow-01</code> → hover <code>--shadow-03</code>
+      </div>
+      <div class="section-header">
+        <p class="section-label">Overview</p>
+        <h2 class="section-title">Numbers that matter</h2>
+        <p class="section-desc">We deliver measurable results backed by data, strategy, and a dedicated team.</p>
+      </div>
+      <div class="grid-4">
+        <div class="stat-card anno" data-token="--radius-lg · --shadow-01">
+          <div class="stat-card__number">98%</div>
+          <div class="stat-card__label">Client satisfaction</div>
+          <div class="stat-card__desc">Measured annually across all accounts</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__number">12+</div>
+          <div class="stat-card__label">Years of experience</div>
+          <div class="stat-card__desc">Deep domain expertise since 2012</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__number">340</div>
+          <div class="stat-card__label">Projects delivered</div>
+          <div class="stat-card__desc">Across 28 countries worldwide</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__number">4.9★</div>
+          <div class="stat-card__label">Average review</div>
+          <div class="stat-card__desc">Based on 900+ verified reviews</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────────── -->
+  <!-- ABOUT                                                            -->
+  <!-- ─────────────────────────────────────────────────────────────── -->
+  <section id="about" class="section section--light">
+    <div class="container">
+      <div class="rule-strip">
+        <strong>About</strong> · Split grid: <code>1fr 1fr</code> · gap: <code>--space-10 (80px)</code> ·
+        Image: <code>--radius-xl (24px)</code> · <code>--shadow-04</code>
+      </div>
+      <div class="about-split">
+        <div class="about-image anno" data-token="--radius-xl · --shadow-04">
+          Image area
+        </div>
+        <div>
+          <p class="section-label">About us</p>
+          <h2 class="section-title">We design with purpose and build with precision</h2>
+          <p class="section-desc">Our multidisciplinary team combines strategic thinking with technical excellence to create digital experiences that drive real business value.</p>
+          <div class="about-features">
+            <div class="about-feature">
+              <div class="about-feature__icon anno" data-token="--radius-md · bg: --color-400">💡</div>
+              <div>
+                <p class="about-feature__title">Strategic thinking</p>
+                <p class="about-feature__desc">We align design decisions with your business goals.</p>
+              </div>
+            </div>
+            <div class="about-feature">
+              <div class="about-feature__icon">⚡</div>
+              <div>
+                <p class="about-feature__title">Fast delivery</p>
+                <p class="about-feature__desc">Lean processes that move at the speed of business.</p>
+              </div>
+            </div>
+            <div class="about-feature">
+              <div class="about-feature__icon">🎯</div>
+              <div>
+                <p class="about-feature__title">Pixel-perfect results</p>
+                <p class="about-feature__desc">Every detail is crafted with care and consistency.</p>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top: var(--space-5);">
+            <button class="btn btn--primary anno" data-token="--btn-shadow-color-1 → hover --btn-shadow-color-2">Our story →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────────── -->
+  <!-- SERVICES                                                         -->
+  <!-- ─────────────────────────────────────────────────────────────── -->
+  <section id="services" class="section section--white">
+    <div class="container">
+      <div class="rule-strip">
+        <strong>Services</strong> · Card: <code>--radius-lg (18px)</code> · <code>--shadow-01</code> →
+        hover <code>--shadow-05</code> (purple accent) · Icon: <code>--radius-md · --gradient-vertical</code>
+      </div>
+      <div class="section-header">
+        <p class="section-label">What we do</p>
+        <h2 class="section-title">Services we offer</h2>
+        <p class="section-desc">From research to launch, we cover every stage of the product lifecycle.</p>
+      </div>
+      <div class="grid-3">
+        <div class="service-card anno" data-token="--radius-lg · --shadow-01 → --shadow-05">
+          <div class="service-card__icon anno" data-token="--gradient-vertical · --btn-shadow-color-1">🎨</div>
+          <h3 class="service-card__title">Brand Design</h3>
+          <p class="service-card__desc">Visual identity systems that communicate your brand's values with clarity and impact across every touchpoint.</p>
+          <a href="#" class="service-card__link">Learn more →</a>
+        </div>
+        <div class="service-card">
+          <div class="service-card__icon">💻</div>
+          <h3 class="service-card__title">Web Development</h3>
+          <p class="service-card__desc">Modern, performant web applications built with best-in-class frameworks and engineering discipline.</p>
+          <a href="#" class="service-card__link">Learn more →</a>
+        </div>
+        <div class="service-card">
+          <div class="service-card__icon">📱</div>
+          <h3 class="service-card__title">Mobile Apps</h3>
+          <p class="service-card__desc">Intuitive iOS and Android experiences designed for delight, retention, and conversion.</p>
+          <a href="#" class="service-card__link">Learn more →</a>
+        </div>
+        <div class="service-card">
+          <div class="service-card__icon">📊</div>
+          <h3 class="service-card__title">Data & Analytics</h3>
+          <p class="service-card__desc">Turn raw data into actionable insights with custom dashboards and reporting systems.</p>
+          <a href="#" class="service-card__link">Learn more →</a>
+        </div>
+        <div class="service-card">
+          <div class="service-card__icon">🚀</div>
+          <h3 class="service-card__title">Growth Strategy</h3>
+          <p class="service-card__desc">Data-driven marketing and growth frameworks that scale your acquisition and retention.</p>
+          <a href="#" class="service-card__link">Learn more →</a>
+        </div>
+        <div class="service-card">
+          <div class="service-card__icon">🔒</div>
+          <h3 class="service-card__title">Security</h3>
+          <p class="service-card__desc">End-to-end security audits and compliance infrastructure to protect your users and data.</p>
+          <a href="#" class="service-card__link">Learn more →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────────── -->
+  <!-- PORTFOLIO                                                        -->
+  <!-- ─────────────────────────────────────────────────────────────── -->
+  <section id="portfolio" class="section section--light">
+    <div class="container">
+      <div class="rule-strip">
+        <strong>Portfolio</strong> · Grid: <code>repeat(3, 1fr)</code> · Item: <code>--radius-xl (24px)</code> ·
+        <code>--shadow-02</code> → hover <code>--shadow-04</code> · Overlay on hover
+      </div>
+      <div class="section-header flex-between">
+        <div>
+          <p class="section-label">Our work</p>
+          <h2 class="section-title">Selected projects</h2>
+        </div>
+        <button class="btn btn--secondary">View all →</button>
+      </div>
+      <div class="grid-3">
+        <div class="portfolio-item anno" data-token="--radius-xl · --shadow-02 → --shadow-04">
+          <div class="portfolio-item__bg">Project 01</div>
+          <div class="portfolio-item__overlay">
+            <div>
+              <span class="portfolio-item__cat">Branding</span>
+              <span class="portfolio-item__label">Nova Identity System</span>
+            </div>
+          </div>
+        </div>
+        <div class="portfolio-item">
+          <div class="portfolio-item__bg">Project 02</div>
+          <div class="portfolio-item__overlay">
+            <div>
+              <span class="portfolio-item__cat">Web Design</span>
+              <span class="portfolio-item__label">Horizon Dashboard</span>
+            </div>
+          </div>
+        </div>
+        <div class="portfolio-item">
+          <div class="portfolio-item__bg">Project 03</div>
+          <div class="portfolio-item__overlay">
+            <div>
+              <span class="portfolio-item__cat">Mobile App</span>
+              <span class="portfolio-item__label">Pulse Health App</span>
+            </div>
+          </div>
+        </div>
+        <div class="portfolio-item">
+          <div class="portfolio-item__bg">Project 04</div>
+          <div class="portfolio-item__overlay">
+            <div>
+              <span class="portfolio-item__cat">E-Commerce</span>
+              <span class="portfolio-item__label">Luxe Store</span>
+            </div>
+          </div>
+        </div>
+        <div class="portfolio-item">
+          <div class="portfolio-item__bg">Project 05</div>
+          <div class="portfolio-item__overlay">
+            <div>
+              <span class="portfolio-item__cat">SaaS</span>
+              <span class="portfolio-item__label">Orbit Platform</span>
+            </div>
+          </div>
+        </div>
+        <div class="portfolio-item">
+          <div class="portfolio-item__bg">Project 06</div>
+          <div class="portfolio-item__overlay">
+            <div>
+              <span class="portfolio-item__cat">Animation</span>
+              <span class="portfolio-item__label">Spark Motion</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────────── -->
+  <!-- TEAM                                                             -->
+  <!-- ─────────────────────────────────────────────────────────────── -->
+  <section id="team" class="section section--white">
+    <div class="container">
+      <div class="rule-strip">
+        <strong>Team</strong> · Card: <code>--radius-lg (18px)</code> · <code>--shadow-01</code> →
+        hover <code>--shadow-03</code> · Avatar: <code>--radius-full</code> · Social icon: <code>--radius-sm (6px)</code>
+      </div>
+      <div class="section-header" style="text-align:center;">
+        <p class="section-label">Our people</p>
+        <h2 class="section-title">Meet the team</h2>
+        <p class="section-desc" style="margin:0 auto;">The talented humans behind every pixel and line of code.</p>
+      </div>
+      <div class="grid-4">
+        <div class="team-card anno" data-token="--radius-lg · --shadow-01 → --shadow-03">
+          <div class="team-card__avatar" style="background:var(--color-400);">👩‍💼</div>
+          <div class="team-card__body">
+            <p class="team-card__name">Sarah Chen</p>
+            <p class="team-card__role">CEO &amp; Founder</p>
+            <p class="team-card__bio">Strategic visionary with 15 years building design-led companies.</p>
+            <div class="team-card__socials">
+              <a href="#" class="social-icon">in</a>
+              <a href="#" class="social-icon">tw</a>
+            </div>
+          </div>
+        </div>
+        <div class="team-card">
+          <div class="team-card__avatar" style="background:var(--purple-100);">👨‍🎨</div>
+          <div class="team-card__body">
+            <p class="team-card__name">Marcus Webb</p>
+            <p class="team-card__role">Design Lead</p>
+            <p class="team-card__bio">Crafting beautiful, functional design systems for 10+ years.</p>
+            <div class="team-card__socials">
+              <a href="#" class="social-icon">dr</a>
+              <a href="#" class="social-icon">be</a>
+            </div>
+          </div>
+        </div>
+        <div class="team-card">
+          <div class="team-card__avatar" style="background:var(--color-300);">👩‍💻</div>
+          <div class="team-card__body">
+            <p class="team-card__name">Priya Sharma</p>
+            <p class="team-card__role">Engineering Lead</p>
+            <p class="team-card__bio">Full-stack architect passionate about performance and scale.</p>
+            <div class="team-card__socials">
+              <a href="#" class="social-icon">gh</a>
+              <a href="#" class="social-icon">in</a>
+            </div>
+          </div>
+        </div>
+        <div class="team-card">
+          <div class="team-card__avatar" style="background:var(--color-400);">👨‍📊</div>
+          <div class="team-card__body">
+            <p class="team-card__name">James Okafor</p>
+            <p class="team-card__role">Head of Growth</p>
+            <p class="team-card__bio">Data-driven strategist with expertise in B2B SaaS growth.</p>
+            <div class="team-card__socials">
+              <a href="#" class="social-icon">in</a>
+              <a href="#" class="social-icon">tw</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────────── -->
+  <!-- GALLERY                                                          -->
+  <!-- ─────────────────────────────────────────────────────────────── -->
+  <section id="gallery" class="section section--light">
+    <div class="container">
+      <div class="rule-strip">
+        <strong>Gallery</strong> · Grid: <code>repeat(4,1fr) + span</code> · Item: <code>--radius-lg (18px)</code> ·
+        <code>--shadow-01</code> · hover scale: <code>transform: scale(1.02)</code>
+      </div>
+      <div class="section-header">
+        <p class="section-label">Gallery</p>
+        <h2 class="section-title">Our work in pictures</h2>
+      </div>
+      <div class="gallery-grid">
+        <div class="gallery-item anno" data-token="span 2x2 · --radius-lg · --shadow-01" style="background:var(--purple-200);">Feature</div>
+        <div class="gallery-item" style="background:var(--color-400);">Image 2</div>
+        <div class="gallery-item" style="background:var(--purple-100);">Image 3</div>
+        <div class="gallery-item" style="background:var(--color-300);">Image 4</div>
+        <div class="gallery-item" style="background:var(--color-400);">Image 5</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────────── -->
+  <!-- TESTIMONIALS                                                     -->
+  <!-- ─────────────────────────────────────────────────────────────── -->
+  <section id="testimonials" class="section section--white">
+    <div class="container">
+      <div class="rule-strip">
+        <strong>Testimonials</strong> · Card: <code>--radius-lg (18px)</code> · <code>--shadow-02</code> →
+        hover <code>--shadow-05</code> · Avatar: <code>--radius-full · --gradient-vertical</code>
+      </div>
+      <div class="section-header" style="text-align:center;">
+        <p class="section-label">Testimonials</p>
+        <h2 class="section-title">What clients say</h2>
+      </div>
+      <div class="grid-3">
+        <div class="testimonial-card anno" data-token="--radius-lg · --shadow-02 → --shadow-05">
+          <div class="stars">★★★★★</div>
+          <p class="testimonial-card__quote">"</p>
+          <p class="testimonial-card__text">Working with BRIX transformed our entire digital presence. The attention to detail and strategic thinking is unmatched.</p>
+          <div class="testimonial-card__author">
+            <div class="testimonial-card__avatar">A</div>
+            <div>
+              <p class="testimonial-card__name">Alice Morgan</p>
+              <p class="testimonial-card__company">CMO, Fintech Co.</p>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <p class="testimonial-card__quote">"</p>
+          <p class="testimonial-card__text">They delivered a world-class product in record time. Our user engagement metrics increased by 240% after launch.</p>
+          <div class="testimonial-card__author">
+            <div class="testimonial-card__avatar">R</div>
+            <div>
+              <p class="testimonial-card__name">Robert Kim</p>
+              <p class="testimonial-card__company">CEO, SaaS Platform</p>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <p class="testimonial-card__quote">"</p>
+          <p class="testimonial-card__text">The design system they built for us scales beautifully. Our whole team now ships faster and more consistently.</p>
+          <div class="testimonial-card__author">
+            <div class="testimonial-card__avatar">N</div>
+            <div>
+              <p class="testimonial-card__name">Nina Patel</p>
+              <p class="testimonial-card__company">CPO, Healthcare App</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────────── -->
+  <!-- TIMELINE                                                         -->
+  <!-- ─────────────────────────────────────────────────────────────── -->
+  <section id="timeline" class="section section--light">
+    <div class="container">
+      <div class="rule-strip">
+        <strong>Timeline</strong> · Dot: <code>--radius-full · --color-primary</code> · Active: <code>--gradient-vertical · --btn-shadow-color-1</code> ·
+        Track: <code>2px solid --color-500</code>
+      </div>
+      <div class="grid-2" style="align-items:start;">
+        <div>
+          <p class="section-label">Our journey</p>
+          <h2 class="section-title">How we got here</h2>
+          <p class="section-desc">A decade of growth, learning, and building exceptional products.</p>
+        </div>
+        <div class="timeline">
+          <div class="timeline-item timeline-item--active anno" data-token="dot: --gradient-vertical · --btn-shadow-color-1">
+            <p class="timeline-item__year">2024</p>
+            <h3 class="timeline-item__title">Global expansion</h3>
+            <p class="timeline-item__desc">Opened offices in London, Singapore, and São Paulo. Now serving 28 countries.</p>
+          </div>
+          <div class="timeline-item">
+            <p class="timeline-item__year">2022</p>
+            <h3 class="timeline-item__title">Series B — $40M raised</h3>
+            <p class="timeline-item__desc">Secured growth funding to accelerate product development and team growth.</p>
+          </div>
+          <div class="timeline-item">
+            <p class="timeline-item__year">2020</p>
+            <h3 class="timeline-item__title">100 clients milestone</h3>
+            <p class="timeline-item__desc">Crossed the 100-client milestone with a 98% retention rate.</p>
+          </div>
+          <div class="timeline-item">
+            <p class="timeline-item__year">2018</p>
+            <h3 class="timeline-item__title">Studio founded</h3>
+            <p class="timeline-item__desc">Started with a small team of 4 in a shared workspace in Lisbon.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────────── -->
+  <!-- CHARTS / SKILLS                                                  -->
+  <!-- ─────────────────────────────────────────────────────────────── -->
+  <section id="charts" class="section section--white">
+    <div class="container">
+      <div class="rule-strip">
+        <strong>Charts / Skills</strong> · Track: <code>--color-400 · --radius-full</code> ·
+        Fill: <code>--gradient-horizontal · --btn-shadow-color-1</code> · Height: <code>8px</code>
+      </div>
+      <div class="grid-2" style="align-items:start; gap: var(--space-10);">
+        <div>
+          <p class="section-label">Expertise</p>
+          <h2 class="section-title">What we excel at</h2>
+          <p class="section-desc">Our core competencies, refined over a decade of practice.</p>
+        </div>
+        <div>
+          <div class="progress-item anno" data-token="fill: --gradient-horizontal · --btn-shadow-color-1">
+            <div class="progress-label">
+              <span class="progress-name">UX/UI Design</span>
+              <span class="progress-pct">96%</span>
+            </div>
+            <div class="progress-track"><div class="progress-fill" style="width:96%;"></div></div>
+          </div>
+          <div class="progress-item">
+            <div class="progress-label">
+              <span class="progress-name">Web Development</span>
+              <span class="progress-pct">92%</span>
+            </div>
+            <div class="progress-track"><div class="progress-fill" style="width:92%;"></div></div>
+          </div>
+          <div class="progress-item">
+            <div class="progress-label">
+              <span class="progress-name">Brand Strategy</span>
+              <span class="progress-pct">88%</span>
+            </div>
+            <div class="progress-track"><div class="progress-fill" style="width:88%;"></div></div>
+          </div>
+          <div class="progress-item">
+            <div class="progress-label">
+              <span class="progress-name">Mobile Development</span>
+              <span class="progress-pct">84%</span>
+            </div>
+            <div class="progress-track"><div class="progress-fill" style="width:84%;"></div></div>
+          </div>
+          <div class="progress-item">
+            <div class="progress-label">
+              <span class="progress-name">Data &amp; Analytics</span>
+              <span class="progress-pct">79%</span>
+            </div>
+            <div class="progress-track"><div class="progress-fill" style="width:79%;"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────────── -->
+  <!-- PRICING                                                          -->
+  <!-- ─────────────────────────────────────────────────────────────── -->
+  <section id="pricing" class="section section--light">
+    <div class="container">
+      <div class="rule-strip">
+        <strong>Pricing</strong> · Card: <code>--radius-xl (24px)</code> · Default: <code>--shadow-02</code> →
+        hover <code>--shadow-04</code> · Featured: <code>--gradient-vertical · --shadow-05</code>
+      </div>
+      <div class="section-header" style="text-align:center;">
+        <p class="section-label">Pricing</p>
+        <h2 class="section-title">Simple, transparent pricing</h2>
+        <p class="section-desc" style="margin:0 auto;">Choose the plan that fits your team and budget.</p>
+      </div>
+      <div class="pricing-grid">
+        <!-- Starter -->
+        <div class="pricing-card anno" data-token="--radius-xl · --shadow-02 → --shadow-04">
+          <span class="pricing-card__badge">Starter</span>
+          <div class="pricing-card__price"><sup>$</sup>29</div>
+          <p class="pricing-card__period">per month, billed annually</p>
+          <hr class="pricing-divider" />
+          <ul class="pricing-features">
+            <li><span class="check">✓</span> 3 projects</li>
+            <li><span class="check">✓</span> 5GB storage</li>
+            <li><span class="check">✓</span> Basic analytics</li>
+            <li><span class="check">✓</span> Email support</li>
+          </ul>
+          <button class="btn btn--secondary" style="width:100%;justify-content:center;">Get started</button>
+        </div>
+        <!-- Pro (featured) -->
+        <div class="pricing-card pricing-card--featured anno" data-token="--gradient-vertical · --shadow-05">
+          <span class="pricing-card__badge">Pro</span>
+          <div class="pricing-card__price"><sup>$</sup>79</div>
+          <p class="pricing-card__period">per month, billed annually</p>
+          <hr class="pricing-divider" />
+          <ul class="pricing-features">
+            <li><span class="check">✓</span> Unlimited projects</li>
+            <li><span class="check">✓</span> 50GB storage</li>
+            <li><span class="check">✓</span> Advanced analytics</li>
+            <li><span class="check">✓</span> Priority support</li>
+            <li><span class="check">✓</span> Custom domain</li>
+          </ul>
+          <button class="btn" style="background:rgba(255,255,255,0.15);color:#fff;width:100%;justify-content:center;backdrop-filter:blur(4px);">Get started</button>
+        </div>
+        <!-- Enterprise -->
+        <div class="pricing-card anno" data-token="--radius-xl · --shadow-02 → --shadow-04">
+          <span class="pricing-card__badge">Enterprise</span>
+          <div class="pricing-card__price"><sup>$</sup>199</div>
+          <p class="pricing-card__period">per month, billed annually</p>
+          <hr class="pricing-divider" />
+          <ul class="pricing-features">
+            <li><span class="check">✓</span> Everything in Pro</li>
+            <li><span class="check">✓</span> 500GB storage</li>
+            <li><span class="check">✓</span> White-label</li>
+            <li><span class="check">✓</span> SLA guarantee</li>
+            <li><span class="check">✓</span> Dedicated account manager</li>
+          </ul>
+          <button class="btn btn--primary" style="width:100%;justify-content:center;">Contact sales</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────────────────────────────────────── -->
+  <!-- ENDING / CTA + FOOTER                                           -->
+  <!-- ─────────────────────────────────────────────────────────────── -->
+  <section id="ending" class="cta-band">
+    <div class="container">
+      <div class="rule-strip" style="background:rgba(255,255,255,0.05);border-color:var(--purple-400);">
+        <strong style="color:var(--color-white);">Ending / CTA</strong> ·
+        <span style="color:var(--purple-300);">bg: <code style="background:rgba(255,255,255,0.1);color:var(--purple-300);">--color-headings-black</code> ·
+        Title: Display 3 (64px) · padding: <code style="background:rgba(255,255,255,0.1);color:var(--purple-300);">--space-12 (120px)</code></span>
+      </div>
+      <p class="cta-band__eyebrow">Ready to start?</p>
+      <h2 class="cta-band__title">Let's build something great together.</h2>
+      <p class="cta-band__desc">Join 340+ companies that trust us to design and engineer their most important products.</p>
+      <div style="display:flex;justify-content:center;gap:var(--space-3);">
+        <button class="btn btn--primary btn--lg anno" data-token="--btn-shadow-color-2">Start your project →</button>
+        <button class="btn btn--lg" style="background:rgba(255,255,255,0.08);color:#fff;border-radius:var(--radius-md);">View portfolio</button>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <p class="footer__logo">BRIX</p>
+        <ul class="footer__links">
+          <li><a href="#">Overview</a></li>
+          <li><a href="#">Services</a></li>
+          <li><a href="#">Portfolio</a></li>
+          <li><a href="#">Pricing</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+        <p class="footer__copy">© 2024 BRIX Templates. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
