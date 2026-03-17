@@ -30,8 +30,11 @@
       --purple-200:  #E1DEFF;
       --purple-100:  #F0EEFF;
 
-      --gradient-v: linear-gradient(180deg, #4A3AFF 0%, #6D3AFF 100%);
-      --gradient-h: linear-gradient(90deg,  #4A3AFF 0%, #6D3AFF 100%);
+      --gradient-vertical:   linear-gradient(180deg, #4A3AFF 0%, #6D3AFF 100%);
+      --gradient-horizontal: linear-gradient(90deg,  #4A3AFF 0%, #6D3AFF 100%);
+      /* aliases for backward compat */
+      --gradient-v: var(--gradient-vertical);
+      --gradient-h: var(--gradient-horizontal);
 
       --font: 'DM Sans', sans-serif;
 
@@ -40,8 +43,16 @@
       --shadow-03: 0px 2px 16px 0px rgba(13,10,44,0.12);
       --shadow-04: 0px 13px 40px 0px rgba(13,10,44,0.22), 0px -8px 18px 0px rgba(13,10,44,0.04);
       --shadow-05: 0px 10px 30px 0px rgba(74,58,255,0.10), 0px 4px 10px 0px rgba(13,10,44,0.02), 0px -18px 38px 0px rgba(74,58,255,0.04);
-      --btn-color-1: 0px 7px 8px 0px rgba(74,58,255,0.13);
-      --btn-color-2: 0px 15px 16px 0px rgba(74,58,255,0.22);
+      --btn-shadow-color-1:   0px 7px 8px 0px rgba(74,58,255,0.13);
+      --btn-shadow-color-2:   0px 15px 16px 0px rgba(74,58,255,0.22);
+      --btn-shadow-color-3:   0px 15px 30px 0px rgba(74,58,255,0.20);
+      --btn-shadow-default-1: 0px 8px 8px 0px rgba(13,10,44,0.08);
+      --btn-shadow-default-2: 0px 8px 16px 0px rgba(13,10,44,0.17);
+      --btn-shadow-default-3: 0px 8px 30px 0px rgba(13,10,44,0.15);
+      /* aliases */
+      --btn-color-1: var(--btn-shadow-color-1);
+      --btn-color-2: var(--btn-shadow-color-2);
+      --shadow-06:   0px 12px 34px 0px rgba(13,10,44,0.08), 0px 34px 26px 0px rgba(13,10,44,0.05);
 
       --radius-sm:   6px;
       --radius-md:   8px;
@@ -675,7 +686,7 @@
     <span class="slide-num" style="color:var(--color-text-gray);">03 / 07</span>
 
     <div class="badge badge--purple">🔭 Exploração · Visão Sistêmica</div>
-    <div id="s3" class="layout">
+    <div class="layout">
 
       <!-- Esquerda -->
       <div>
