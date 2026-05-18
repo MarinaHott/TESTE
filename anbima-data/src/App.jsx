@@ -12,32 +12,38 @@ function App() {
       <Header />
 
       <main style={{ paddingTop: 64 }}>
-        <div style={{ width: 1366, margin: '0 auto', padding: '32px 67px 0' }}>
-          <Breadcrumb />
-
-          <h1 style={{
-            fontFamily: 'Lato, sans-serif',
-            fontWeight: 900,
-            fontSize: 32,
-            color: '#1F1F1F',
-            margin: '0 0 8px',
-            lineHeight: 1.2,
-          }}>
-            Curvas de crédito
-          </h1>
-          <p style={{
-            fontFamily: 'Lato, sans-serif',
-            fontWeight: 400,
-            fontSize: 14,
-            color: '#666666',
-            margin: '0 0 32px',
-          }}>
-            Consulte gráficos e tabelas de referência para a precificação de ativos de crédito privado no mercado secundário.
-          </p>
+        <div style={{ maxWidth: 1376, margin: '0 auto', padding: '24px 72px 72px', display: 'flex', flexDirection: 'column', gap: 32 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+            <Breadcrumb />
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+              <h1 style={{
+                fontFamily: 'Lato, sans-serif',
+                fontWeight: 900,
+                fontSize: 32,
+                color: '#1F1F1F',
+                margin: 0,
+                lineHeight: 1.2,
+              }}>
+                Curvas de crédito
+              </h1>
+              <p style={{
+                fontFamily: 'Lato, sans-serif',
+                fontWeight: 400,
+                fontSize: 14,
+                color: '#666666',
+                margin: 0,
+                letterSpacing: '0.7px',
+              }}>
+                Consulte gráficos e tabelas de referência para a precificação de ativos de crédito privado no mercado secundário.
+              </p>
+            </div>
+          </div>
 
           <HowItWorks />
-          <ChartCard />
-          <TableCard />
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+            <ChartCard />
+            <TableCard />
+          </div>
           <AnbimaFeedBanner />
         </div>
       </main>

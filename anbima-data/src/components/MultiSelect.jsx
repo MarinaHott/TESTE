@@ -28,18 +28,39 @@ export default function MultiSelect({ label, options, selected, onChange, width 
     }
   }
 
-  const displayLabel = isAllSelected
-    ? `Todos (${allValues.length})`
-    : selected.length === 0
-    ? label
-    : selected.length === 1
-    ? options.find(o => o.value === selected[0])?.label ?? selected[0]
-    : `${selected.length} selecionados`
+  const totalCount = allValues.length
+
+  function renderLabel() {
+    if (selected.length === 0) {
+      return (
+        <>
+          <span>Selecionar</span>
+          <span style={{ fontWeight: 700, color: '#0095D9' }}> ({totalCount})</span>
+        </>
+      )
+    }
+    if (isAllSelected) {
+      return (
+        <>
+          <span>Todos</span>
+          <span style={{ fontWeight: 700, color: '#0095D9' }}> ({totalCount})</span>
+        </>
+      )
+    }
+    const firstName = options.find(o => o.value === selected[0])?.label ?? selected[0]
+    const rest = selected.length - 1
+    return (
+      <>
+        <span>{firstName}</span>
+        {rest > 0 && <span style={{ fontWeight: 700, color: '#0095D9' }}> +{rest}</span>}
+      </>
+    )
+  }
 
   return (
     <div ref={ref} style={{ position: 'relative', display: 'inline-block' }}>
       {label && (
-        <label style={{ display: 'block', fontFamily: 'Lato, sans-serif', fontSize: 12, color: '#666666', marginBottom: 4, fontWeight: 400 }}>
+        <label style={{ display: 'block', fontFamily: 'Lato, sans-serif', fontSize: 12, color: '#161616', marginBottom: 4, fontWeight: 400 }}>
           {label}
         </label>
       )}
@@ -62,7 +83,7 @@ export default function MultiSelect({ label, options, selected, onChange, width 
           gap: 8,
         }}
       >
-        <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{displayLabel}</span>
+        <span style={{ display: 'flex', alignItems: 'center', whiteSpace: 'nowrap', overflow: 'hidden' }}>{renderLabel()}</span>
         <IconChevronDown size={16} color="#363636" />
       </button>
 

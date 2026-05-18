@@ -21,6 +21,7 @@ export default function Breadcrumb() {
               fontWeight: c.bold ? 700 : 400,
               textTransform: 'uppercase',
               fontFamily: 'Lato, sans-serif',
+              letterSpacing: '0.6px',
               cursor: i < crumbs.length - 1 ? 'pointer' : 'default',
             }}
           >

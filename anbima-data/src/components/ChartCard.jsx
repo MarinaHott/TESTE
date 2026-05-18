@@ -128,6 +128,7 @@ export default function ChartCard() {
 
   const rawData = DATA_BY_DATE[date] ?? DATA_BY_DATE[DEFAULT_CHART_DATE]
   const activeCurves = getActiveCurves(view)
+  const isDefault = date === DEFAULT_CHART_DATE && view === 'Comparativo'
 
   function clearFilters() {
     setDate(DEFAULT_CHART_DATE)
@@ -156,10 +157,13 @@ export default function ChartCard() {
         <Dropdown value={view} options={VIEWS} onChange={setView} />
         <button
           onClick={clearFilters}
+          disabled={isDefault}
           style={{
-            background: 'none', border: 'none', cursor: 'pointer',
+            background: 'none', border: 'none',
+            cursor: isDefault ? 'default' : 'pointer',
             fontFamily: 'Lato, sans-serif', fontSize: 14, color: '#666666',
             padding: '10px 0', alignSelf: 'flex-end',
+            opacity: isDefault ? 0.4 : 1,
           }}
         >
           Limpar filtros

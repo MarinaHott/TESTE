@@ -131,13 +131,13 @@ export default function TableCard() {
             style={{
               display: 'flex', alignItems: 'center', gap: 8,
               marginLeft: 'auto', height: 40,
-              border: '1px solid #0095D9', borderRadius: 4,
+              border: '1px solid #666666', borderRadius: 8,
               padding: '0 16px', background: 'white', cursor: 'pointer',
-              fontFamily: 'Lato, sans-serif', fontSize: 14, color: '#0095D9',
+              fontFamily: 'Lato, sans-serif', fontSize: 14, color: '#666666',
               alignSelf: 'flex-end',
             }}
           >
-            <IconDownload size={16} color="#0095D9" />
+            <IconDownload size={16} color="#666666" />
             Download
           </button>
         </div>
@@ -200,7 +200,7 @@ export default function TableCard() {
 }
 
 const thStyle = {
-  padding: '0 24px',
+  padding: '0 16px',
   height: 50,
   fontFamily: 'Lato, sans-serif',
   fontSize: 14,
@@ -212,7 +212,7 @@ const thStyle = {
 }
 
 const tdStyle = {
-  padding: '0 24px',
+  padding: '0 16px',
   height: 50,
   fontFamily: 'Lato, sans-serif',
   fontSize: 14,
