@@ -11,6 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="/TESTE/curvas-credito.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 </head>
 <body>
 
@@ -22,12 +23,11 @@
   <header class="header">
     <div class="header__inner">
 
-      <!-- Logo: 83px × 38px -->
-      <!-- NOTA: URL do Figma CDN — válida por 7 dias. Substituir por asset local antes de produção. -->
+      <!-- Logo: 83px × 38px — extraído do Figma via proxy -->
       <a href="#" class="header__logo-link">
         <img
           class="header__logo"
-          src="https://www.figma.com/api/mcp/asset/aa7e1f01-3c02-448b-a9d5-74518d1a7041"
+          src="assets/logo-anbima-data.png"
           alt="ANBIMA Data"
           width="83"
           height="38"
@@ -70,23 +70,19 @@
           </div>
         </nav>
 
-        <!-- Ícone compass/rosa (21px × 21px) -->
-        <!-- NOTA: URL do Figma CDN — válida por 7 dias. -->
+        <!-- Ícone compass/rosa (21px × 21px) — extraído do Figma via proxy -->
         <img
           class="header__compass"
-          src="https://www.figma.com/api/mcp/asset/a26c1405-edb8-42d6-8ff8-31f6587a77d0"
+          src="assets/icon-compass.png"
           alt=""
           width="21"
           height="21"
           aria-hidden="true"
         />
 
-        <!-- Ícone de busca (24px × 24px) -->
+        <!-- Ícone de busca (24px × 24px) — extraído do Figma via proxy -->
         <button class="header__search" aria-label="Buscar">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-            <circle cx="6.5" cy="6.5" r="4" stroke="#666" stroke-width="1.5"/>
-            <path d="M10 10L13.5 13.5" stroke="#666" stroke-width="1.5" stroke-linecap="round"/>
-          </svg>
+          <img src="assets/icon-search.png" alt="" width="24" height="24" aria-hidden="true" />
         </button>
 
       </div>
@@ -206,14 +202,203 @@
 
 
       <!-- ============================================================
-           PLACEHOLDERS — Níveis 2 e 3
-           Serão substituídos nas próximas etapas de implementação
+           NÍVEL 2 — Gráfico com filtros
+           Frame: 5074:39752 — Tabela com filtros
+           1232px × 618px, padding 24px, border-radius 8px
            ============================================================ -->
-      <div class="section-placeholder">[ Nível 2 — Gráfico ]</div>
+      <section class="chart-card">
+
+        <!-- Cabeçalho + filtros -->
+        <div class="chart-card__header">
+
+          <div class="chart-card__description">
+            <p class="chart-title-text">Utilize os filtros abaixo para visualizar taxas referentes ás curvas de crédito.</p>
+            <p class="chart-subtitle-text">Última atualização da página às <strong>HH:MM</strong>. O gráfico atualizará automaticamente após 24h.</p>
+          </div>
+
+          <div class="chart-filters-row">
+            <div class="chart-filter-fields">
+
+              <!-- Campo Data -->
+              <div class="filter-field">
+                <span class="filter-label">Data</span>
+                <div class="filter-input">
+                  <span class="filter-input__text">09/07/2026</span>
+                  <span class="filter-input__icon">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                      <rect x="1.5" y="3" width="13" height="12" rx="1.5" stroke="#363636" stroke-width="1.2"/>
+                      <path d="M1.5 6.5H14.5" stroke="#363636" stroke-width="1.2"/>
+                      <path d="M5 1.5V4.5" stroke="#363636" stroke-width="1.2" stroke-linecap="round"/>
+                      <path d="M11 1.5V4.5" stroke="#363636" stroke-width="1.2" stroke-linecap="round"/>
+                    </svg>
+                  </span>
+                </div>
+              </div>
+
+              <!-- Campo Visualização -->
+              <div class="filter-field">
+                <span class="filter-label">Visualização</span>
+                <button class="filter-select" aria-haspopup="listbox">
+                  <span class="filter-select__text">Comparativo</span>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path d="M8 10l4 4 4-4" stroke="#363636" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+              </div>
+
+            </div>
+            <button class="btn-clear-filters" type="button">Limpar filtros</button>
+          </div>
+
+        </div>
+
+        <!-- Bloco principal do gráfico -->
+        <div class="chart-main">
+
+          <div class="chart-visual">
+            <p class="chart-axis-label-y">TAXA (% a.a.)</p>
+            <canvas id="creditChart" width="1184" height="300"></canvas>
+            <div class="chart-footer-row">
+              <div class="chart-legend">
+                <div class="legend-item">
+                  <span class="legend-dot" style="background-color:#0095d9"></span>
+                  <span>AAA</span>
+                </div>
+                <div class="legend-item">
+                  <span class="legend-dot" style="background-color:#80c342"></span>
+                  <span>AA</span>
+                </div>
+                <div class="legend-item">
+                  <span class="legend-dot" style="background-color:#fcaf17"></span>
+                  <span>A</span>
+                </div>
+              </div>
+              <span class="chart-axis-label-x">VÉRTICES (ANOS)</span>
+            </div>
+          </div>
+
+          <div class="chart-footnote">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" flex-shrink="0">
+              <circle cx="8" cy="8" r="6.5" stroke="#666666" stroke-width="1.2"/>
+              <line x1="8" y1="7.5" x2="8" y2="11" stroke="#666666" stroke-width="1.2" stroke-linecap="round"/>
+              <circle cx="8" cy="5.5" r="0.75" fill="#666666"/>
+            </svg>
+            <span>DI Interpolado pelo método de Svensson</span>
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- ============================================================
+           PLACEHOLDER — Nível 3
+           ============================================================ -->
       <div class="section-placeholder">[ Nível 3 — Tabela, Banner e Footer ]</div>
 
     </div>
   </main>
+
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const ctx = document.getElementById('creditChart').getContext('2d');
+
+      const labels = ['0,5', '1', '1,5', '2', '2,5', '3', '3,5', '4', '4,5', '5'];
+
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: 'AAA',
+              data: [0.05, 0.90, 1.40, 1.72, 1.92, 2.08, 2.18, 2.27, 2.38, 2.46],
+              borderColor: '#0095d9',
+              backgroundColor: 'transparent',
+              borderWidth: 2,
+              tension: 0.4,
+              pointRadius: 0,
+              pointHoverRadius: 0,
+            },
+            {
+              label: 'AA',
+              data: [0.88, 1.68, 2.18, 2.48, 2.68, 2.80, 2.88, 2.94, 2.98, 3.02],
+              borderColor: '#80c342',
+              backgroundColor: 'transparent',
+              borderWidth: 2,
+              tension: 0.4,
+              pointRadius: 0,
+              pointHoverRadius: 0,
+            },
+            {
+              label: 'A',
+              data: [2.06, 2.86, 3.30, 3.58, 3.77, 3.90, 3.98, 4.03, 4.07, 4.10],
+              borderColor: '#fcaf17',
+              backgroundColor: 'transparent',
+              borderWidth: 2,
+              tension: 0.4,
+              pointRadius: 0,
+              pointHoverRadius: 0,
+            }
+          ]
+        },
+        options: {
+          responsive: false,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: { enabled: false }
+          },
+          layout: {
+            padding: { top: 10, right: 0, bottom: 0, left: 0 }
+          },
+          scales: {
+            x: {
+              grid: { display: false },
+              border: { display: false },
+              ticks: {
+                color: '#484a4d',
+                font: { family: 'Lato', size: 12 },
+                maxRotation: 0,
+                minRotation: 0,
+                padding: 8,
+              }
+            },
+            y: {
+              min: -0.05,
+              max: 4.55,
+              grid: {
+                color: '#ebebeb',
+                drawTicks: false,
+              },
+              border: { display: false },
+              ticks: {
+                color: '#484a4d',
+                font: { family: 'Lato', size: 12 },
+                padding: 8,
+                callback: function (value) {
+                  const specific = [0.0467, 1.0467, 2.0467, 3.0467, 4.0467];
+                  const match = specific.find(t => Math.abs(t - value) < 0.01);
+                  return match !== undefined
+                    ? match.toFixed(4).replace('.', ',')
+                    : null;
+                }
+              },
+              afterBuildTicks: function (axis) {
+                axis.ticks = [
+                  { value: 0.0467 },
+                  { value: 1.0467 },
+                  { value: 2.0467 },
+                  { value: 3.0467 },
+                  { value: 4.0467 },
+                ];
+              }
+            }
+          }
+        }
+      });
+    });
+  </script>
 
 </body>
 </html>
