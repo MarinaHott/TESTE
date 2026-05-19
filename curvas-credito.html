@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Curvas de crédito — ANBIMA Data</title>
+
+  <!-- Lato: Regular (400), Bold (700), Black (900) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/TESTE/curvas-credito.css" />
+</head>
+<body>
+
+  <!-- ============================================================
+       HEADER
+       Frame: 5075:11358 — header -- menu
+       1366px wide, 64px tall, 40px horizontal padding
+       ============================================================ -->
+  <header class="header">
+    <div class="header__inner">
+
+      <!-- Logo: 83px × 38px -->
+      <!-- NOTA: URL do Figma CDN — válida por 7 dias. Substituir por asset local antes de produção. -->
+      <a href="#" class="header__logo-link">
+        <img
+          class="header__logo"
+          src="https://www.figma.com/api/mcp/asset/aa7e1f01-3c02-448b-a9d5-74518d1a7041"
+          alt="ANBIMA Data"
+          width="83"
+          height="38"
+        />
+      </a>
+
+      <!-- Nav + ações -->
+      <div class="header__right">
+
+        <!-- Itens de navegação -->
+        <nav class="header__nav" aria-label="Navegação principal">
+
+          <!-- Dados de mercado ▾ -->
+          <div class="header__nav-item">
+            <span class="header__nav-label">Dados de mercado</span>
+            <svg class="header__nav-chevron" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M8 10l4 4 4-4" stroke="#666" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+
+          <!-- Publicações ▾ -->
+          <div class="header__nav-item">
+            <span class="header__nav-label">Publicações</span>
+            <svg class="header__nav-chevron" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M8 10l4 4 4-4" stroke="#666" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+
+          <!-- Datasets (sem chevron) -->
+          <div class="header__nav-item">
+            <span class="header__nav-label">Datasets</span>
+          </div>
+
+          <!-- Ferramentas ▾ -->
+          <div class="header__nav-item">
+            <span class="header__nav-label">Ferramentas</span>
+            <svg class="header__nav-chevron" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M8 10l4 4 4-4" stroke="#666" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </nav>
+
+        <!-- Ícone compass/rosa (21px × 21px) -->
+        <!-- NOTA: URL do Figma CDN — válida por 7 dias. -->
+        <img
+          class="header__compass"
+          src="https://www.figma.com/api/mcp/asset/a26c1405-edb8-42d6-8ff8-31f6587a77d0"
+          alt=""
+          width="21"
+          height="21"
+          aria-hidden="true"
+        />
+
+        <!-- Ícone de busca (24px × 24px) -->
+        <button class="header__search" aria-label="Buscar">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <circle cx="6.5" cy="6.5" r="4" stroke="#666" stroke-width="1.5"/>
+            <path d="M10 10L13.5 13.5" stroke="#666" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </button>
+
+      </div>
+    </div>
+  </header>
+
+
+  <!-- ============================================================
+       CONTEÚDO PRINCIPAL
+       Frame 693: x=67, y=24 dentro do frame da página (1366px)
+       Padding: 24px top, 67px left/right
+       ============================================================ -->
+  <main>
+    <div class="page-body">
+
+      <!-- ============================================================
+           FRAME 697 — Breadcrumb + Título da página (height: 104px)
+           gap interno: 24px
+           ============================================================ -->
+      <div class="page-header">
+
+        <!-- Breadcrumb -->
+        <!-- Font: Lato Regular 12px, #777c87, uppercase, tracking 0.6px -->
+        <!-- Último item: Lato Bold -->
+        <nav class="breadcrumb" aria-label="Trilha de navegação">
+          <a href="#" class="breadcrumb__item">Home</a>
+
+          <span class="breadcrumb__separator" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M6.5 4l3.5 4-3.5 4" stroke="#777c87" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+
+          <a href="#" class="breadcrumb__item">Dados de Mercado</a>
+
+          <span class="breadcrumb__separator" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M6.5 4l3.5 4-3.5 4" stroke="#777c87" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+
+          <a href="#" class="breadcrumb__item">Curvas</a>
+
+          <span class="breadcrumb__separator" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M6.5 4l3.5 4-3.5 4" stroke="#777c87" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+
+          <a href="#" class="breadcrumb__item">Títulos Privados</a>
+
+          <span class="breadcrumb__separator" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M6.5 4l3.5 4-3.5 4" stroke="#777c87" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+
+          <!-- Último item: bold (ativo) -->
+          <span class="breadcrumb__item breadcrumb__item--active" aria-current="page">Curvas de Crédito</span>
+        </nav>
+
+        <!-- Título + Subtítulo -->
+        <!-- h1: Lato Black 900, 32px, #1f1f1f -->
+        <!-- p: Lato Regular 400, 14px, #666, tracking 0.7px -->
+        <div class="page-title">
+          <h1 class="page-title__heading">Curvas de crédito</h1>
+          <p class="page-title__subtitle">
+            Consulte gráficos e tabelas de referência para a precificação de ativos de crédito privado no mercado secundário.
+          </p>
+        </div>
+
+      </div>
+      <!-- /FRAME 697 — gap de 32px até o próximo bloco via margin-bottom -->
+
+
+      <!-- ============================================================
+           CABEÇALHO - DESCRIÇÃO — "Como funciona?" (height: 184px)
+           Figma node: 2664:81637
+           gap interno: 24px (título → conteúdo), 8px (entre parágrafos)
+           ============================================================ -->
+      <section class="como-funciona" aria-label="Como funciona">
+
+        <!-- Título: Lato Bold 16px, #363636 -->
+        <h2 class="como-funciona__title">Como funciona?</h2>
+
+        <!-- Parágrafos: labels Bold + texto Regular, 14px, #363636, line-height 1.2 -->
+        <div class="como-funciona__body">
+
+          <p class="como-funciona__paragraph">
+            <strong>O que é:</strong> Nossa ferramenta disponibiliza estimativas diárias das curvas de spread de crédito divididas por níveis de risco (rating).
+          </p>
+
+          <p class="como-funciona__paragraph">
+            <strong>Critérios:</strong> As curvas de crédito são extraídas a partir de debêntures precificadas diariamente pela ANBIMA (DI Percentual, DI+spread e IPCA+spread) e refletem estruturas de spread zero-cupom sobre a curva soberana para diferentes níveis de risco.
+          </p>
+
+          <p class="como-funciona__paragraph">
+            <strong>Limitações:</strong> A divulgação das curvas por nível de risco está sujeita à existência de séries de debêntures sem cláusula de resgate/amortização antecipada na amostra de precificação da ANBIMA (http://www.anbima.com.br/informacoes/merc-sec-debentures/merc-sec-debentures.asp)
+          </p>
+
+        </div>
+
+        <!-- Link metodologia: Lato Bold (700) 14px, #0095d9 + ícone externo 12px -->
+        <a href="#" class="como-funciona__link" target="_blank" rel="noopener">
+          Veja aqui a metodologia
+          <span class="como-funciona__link-icon" aria-hidden="true">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M7 1.5H10.5V5" stroke="#0095d9" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M10.5 1.5L5.5 6.5" stroke="#0095d9" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M5 3H2C1.44772 3 1 3.44772 1 4V10C1 10.5523 1.44772 11 2 11H8C8.55228 11 9 10.5523 9 10V7" stroke="#0095d9" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </a>
+
+      </section>
+      <!-- /CABEÇALHO - DESCRIÇÃO — gap de 32px até o gráfico via margin-bottom -->
+
+
+      <!-- ============================================================
+           PLACEHOLDERS — Níveis 2 e 3
+           Serão substituídos nas próximas etapas de implementação
+           ============================================================ -->
+      <div class="section-placeholder">[ Nível 2 — Gráfico ]</div>
+      <div class="section-placeholder">[ Nível 3 — Tabela, Banner e Footer ]</div>
+
+    </div>
+  </main>
+
+</body>
+</html>
