@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Curvas de crédito — ANBIMA DATA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      font-size: 14px;
+      color: #363636;
+      background: #fff;
+      min-width: 1376px;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    /* ── NAVBAR ── */
+    .navbar {
+      height: 64px;
+      background: #fff;
+      border-bottom: 1px solid #dfdfdf;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-menus {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+    }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+    }
+    .menu-item a {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      font-size: 16px;
+      font-weight: 700;
+      color: #666;
+      line-height: 24px;
+      white-space: nowrap;
+    }
+
+    /* ── MAIN WRAPPER ── */
+    .page-wrap {
+      padding: 0 72px 0;
+    }
+
+    /* ── BREADCRUMB ── */
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      padding: 16px 0 0;
+      font-size: 12px;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 0;
+      line-height: 16px;
+    }
+    .breadcrumb-sep {
+      margin: 0 4px;
+      color: #aaa;
+    }
+    .breadcrumb-active {
+      color: #363636;
+      font-weight: 700;
+    }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      padding: 24px 0 20px;
+    }
+    .page-title {
+      font-size: 32px;
+      font-weight: 700;
+      color: #161616;
+      line-height: 40px;
+      margin-bottom: 8px;
+    }
+    .page-subtitle {
+      font-size: 14px;
+      font-weight: 400;
+      color: #666;
+      line-height: 20px;
+    }
+
+    /* ── COMO FUNCIONA ── */
+    .how-section {
+      margin-bottom: 24px;
+    }
+    .how-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #161616;
+      margin-bottom: 8px;
+      line-height: 24px;
+    }
+    .how-text {
+      font-size: 14px;
+      color: #363636;
+      line-height: 20px;
+      margin-bottom: 2px;
+    }
+    .how-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      color: #0095d9;
+      font-size: 14px;
+      margin-top: 8px;
+      line-height: 20px;
+    }
+
+    /* ── CARDS ── */
+    .card {
+      background: #fefefe;
+      border: 1px solid #d4d4d4;
+      border-radius: 8px;
+      margin-bottom: 24px;
+      width: 1232px;
+    }
+
+    /* ── CHART CARD ── */
+    .chart-top {
+      padding: 24px 24px 0;
+    }
+    .chart-desc {
+      font-size: 14px;
+      color: #363636;
+      line-height: 20px;
+    }
+    .chart-update {
+      font-size: 12px;
+      color: #666;
+      line-height: 16px;
+      margin-top: 2px;
+    }
+    .chart-update b {
+      color: #363636;
+      font-weight: 700;
+    }
+    .chart-filters {
+      display: flex;
+      align-items: flex-end;
+      gap: 16px;
+      padding: 16px 24px 0;
+    }
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .filter-label {
+      font-size: 12px;
+      color: #161616;
+      line-height: 16px;
+      font-feature-settings: 'lnum' 1, 'pnum' 1;
+    }
+    .filter-input-wrap {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+    }
+    .filter-input {
+      height: 40px;
+      border: 1px solid #d4d4d4;
+      border-radius: 4px;
+      background: #fefefe;
+      font-family: 'Lato', sans-serif;
+      font-size: 14px;
+      color: #363636;
+      padding: 0 40px 0 12px;
+      outline: none;
+      cursor: pointer;
+      width: 180px;
+    }
+    .input-icon {
+      position: absolute;
+      right: 10px;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+    }
+    .dropdown-btn {
+      height: 40px;
+      border: 1px solid #d4d4d4;
+      border-radius: 4px;
+      background: #fefefe;
+      display: flex;
+      align-items: center;
+      padding: 0 8px 0 12px;
+      gap: 8px;
+      cursor: pointer;
+    }
+    .dropdown-text {
+      font-size: 14px;
+      color: #363636;
+      flex: 1;
+      text-align: left;
+      white-space: nowrap;
+      line-height: 20px;
+    }
+    .dropdown-count {
+      font-size: 14px;
+      font-weight: 700;
+      color: #0095d9;
+      white-space: nowrap;
+    }
+    .btn-clear {
+      background: none;
+      border: none;
+      font-family: 'Lato', sans-serif;
+      font-size: 14px;
+      color: #0095d9;
+      cursor: pointer;
+      padding: 10px 0;
+      line-height: 20px;
+      align-self: flex-end;
+    }
+
+    .chart-y-label {
+      font-size: 10px;
+      color: #666;
+      letter-spacing: 0.5px;
+      padding: 12px 24px 0;
+      text-transform: uppercase;
+    }
+    .chart-svg-wrap {
+      padding: 4px 24px 0;
+    }
+    .chart-bottom-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 24px;
+    }
+    .legend-items {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: #363636;
+    }
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .legend-dot.aaa { background: #4a90d9; }
+    .legend-dot.aa  { background: #5baa4f; }
+    .legend-dot.a   { background: #f5a623; }
+    .vertices-label {
+      font-size: 10px;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .chart-footnote {
+      padding: 4px 24px 16px;
+      font-size: 12px;
+      color: #666;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      line-height: 16px;
+    }
+
+    /* ── TABLE CARD ── */
+    .table-top {
+      padding: 24px 24px 0;
+    }
+    .table-card-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #161616;
+      line-height: 24px;
+      margin-bottom: 16px;
+    }
+    .table-filters {
+      display: flex;
+      align-items: flex-end;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .flex-spacer { flex: 1; }
+    .btn-download {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      height: 40px;
+      border: 1px solid #0095d9;
+      border-radius: 4px;
+      background: #fefefe;
+      color: #0095d9;
+      font-family: 'Lato', sans-serif;
+      font-size: 14px;
+      padding: 0 16px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .table-outer {
+      border: 1px solid #d4d4d4;
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 0 24px 24px;
+      height: 650px;
+      display: flex;
+      flex-direction: column;
+    }
+    .table-scroll {
+      overflow-y: auto;
+      overflow-x: hidden;
+      flex: 1;
+    }
+    .table-scroll::-webkit-scrollbar { width: 4px; }
+    .table-scroll::-webkit-scrollbar-track { background: #f5f5f5; }
+    .table-scroll::-webkit-scrollbar-thumb { background: #d4d4d4; border-radius: 2px; }
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+    .data-table thead th {
+      position: sticky;
+      top: 0;
+      background: #f5f5f5;
+      border-bottom: 1px solid #d4d4d4;
+      padding: 8px 16px;
+      text-align: left;
+      font-size: 14px;
+      font-weight: 400;
+      color: #666;
+      height: 50px;
+      white-space: nowrap;
+      z-index: 2;
+    }
+    .data-table td {
+      background: #fefefe;
+      border-bottom: 1px solid #d4d4d4;
+      padding: 16px;
+      font-size: 14px;
+      font-weight: 400;
+      color: #363636;
+      height: 50px;
+      white-space: nowrap;
+    }
+    .data-table col.col-vertices { width: 130px; }
+    .data-table col.col-rating   { width: 130px; }
+    .data-table col.col-last     { width: auto; }
+
+    /* ── BANNER ── */
+    .banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #1a6eb5;
+      border-radius: 8px;
+      padding: 28px 32px;
+      width: 1232px;
+      margin-bottom: 0;
+      gap: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .banner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #0d5ca8 0%, #1e7fc1 50%, #0a4f96 100%);
+      z-index: 0;
+    }
+    .banner-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      position: relative;
+      z-index: 1;
+    }
+    .banner-icon-wrap {
+      width: 48px;
+      height: 48px;
+      flex-shrink: 0;
+    }
+    .banner-text h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 24px;
+      margin-bottom: 4px;
+    }
+    .banner-text p {
+      font-size: 14px;
+      color: rgba(255,255,255,0.85);
+      line-height: 20px;
+    }
+    .banner-text a {
+      color: rgba(255,255,255,0.85);
+      text-decoration: underline;
+    }
+    .banner-btn {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #fff;
+      color: #0095d9;
+      font-family: 'Lato', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      height: 40px;
+      padding: 0 20px;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      background: #191919;
+      padding: 48px 72px 40px;
+      margin-top: 48px;
+    }
+    .footer-inner {
+      display: flex;
+      gap: 80px;
+    }
+    .footer-logo-col {
+      flex-shrink: 0;
+    }
+    .footer-nav {
+      display: flex;
+      gap: 80px;
+      flex: 1;
+    }
+    .footer-col h4 {
+      font-size: 12px;
+      font-weight: 700;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 16px;
+      line-height: 16px;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: 12px; }
+    .footer-col a {
+      font-size: 14px;
+      color: rgba(255,255,255,0.65);
+      line-height: 20px;
+    }
+    .footer-version {
+      font-size: 14px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 8px;
+      line-height: 20px;
+    }
+    .footer-disclaimer {
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+      line-height: 18px;
+      max-width: 340px;
+    }
+    .footer-disclaimer a {
+      color: rgba(255,255,255,0.65);
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════ NAVBAR ════════════ -->
+<nav class="navbar">
+  <!-- Logo -->
+  <svg width="83" height="38" viewBox="0 0 83 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 4C0 1.79086 1.79086 0 4 0H14C15.1046 0 16 0.895431 16 2V36C16 37.1046 15.1046 38 14 38H4C1.79086 38 0 36.2091 0 34V4Z" fill="#0095d9"/>
+    <path d="M4 7L8 2L12 7V15H4V7Z" fill="#fff" opacity="0.9"/>
+    <path d="M4 17H12V25H4V17Z" fill="#fff" opacity="0.7"/>
+    <path d="M4 27H12V33C12 34.1046 11.1046 35 10 35H4V27Z" fill="#fff" opacity="0.5"/>
+    <text x="21" y="16" font-family="Lato, sans-serif" font-size="12" font-weight="700" fill="#161616" letter-spacing="0.3">ANBIMA</text>
+    <text x="21" y="30" font-family="Lato, sans-serif" font-size="12" font-weight="400" fill="#0095d9" letter-spacing="1">data</text>
+  </svg>
+
+  <div class="nav-right">
+    <div class="nav-menus">
+      <div class="menu-item">
+        <a href="#">Dados de mercado
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M7 10l5 5 5-5" stroke="#666" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+      <div class="menu-item">
+        <a href="#">Publicações
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M7 10l5 5 5-5" stroke="#666" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+      <div class="menu-item">
+        <a href="#" style="font-size:16px;font-weight:700;color:#666;">Datasets</a>
+      </div>
+      <div class="menu-item">
+        <a href="#">Ferramentas
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M7 10l5 5 5-5" stroke="#666" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+    <!-- Plus circle -->
+    <svg width="21" height="21" viewBox="0 0 21 21" fill="none">
+      <circle cx="10.5" cy="10.5" r="9.5" stroke="#0095d9" stroke-width="1.2"/>
+      <path d="M10.5 6.5v8M6.5 10.5h8" stroke="#0095d9" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+    <!-- Search -->
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <circle cx="10.5" cy="10.5" r="6.5" stroke="#363636" stroke-width="1.8"/>
+      <path d="M15.5 15.5L20 20" stroke="#363636" stroke-width="1.8" stroke-linecap="round"/>
+    </svg>
+  </div>
+</nav>
+
+<!-- ════════════ PAGE CONTENT ════════════ -->
+<div class="page-wrap">
+
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb">
+    <span>Home</span><span class="breadcrumb-sep">›</span>
+    <span>Dados de mercado</span><span class="breadcrumb-sep">›</span>
+    <span>Curvas</span><span class="breadcrumb-sep">›</span>
+    <span>Títulos privados</span><span class="breadcrumb-sep">›</span>
+    <span class="breadcrumb-active">Curvas de crédito</span>
+  </nav>
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <h1 class="page-title">Curvas de crédito</h1>
+    <p class="page-subtitle">Consulte gráficos e tabelas de referência para a precificação de ativos de crédito privado no mercado secundário.</p>
+  </div>
+
+  <!-- Como funciona -->
+  <div class="how-section">
+    <h2 class="how-title">Como funciona?</h2>
+    <p class="how-text"><strong>O que é:</strong> Nossa ferramenta disponibiliza estimativas diárias das curvas de spread de crédito divididas por níveis de risco (rating).</p>
+    <p class="how-text"><strong>Critérios:</strong> As curvas de crédito são extraídas a partir de debêntures precificadas diariamente pela ANBIMA (DI Percentual, DI+spread e IPCA+spread) e refletem estruturas de spread zero-cupom sobre a curva soberana para diferentes níveis de risco.</p>
+    <p class="how-text"><strong>Limitações:</strong> A divulgação das curvas por nível de risco está sujeita à existência de séries de debêntures sem cláusula de resgate/amortização antecipada na amostra de precificação da ANBIMA (http://www.anbima.com.br/informacoes/merc-sec-debentures/merc-sec-debentures.asp)</p>
+    <a href="#" class="how-link">Veja aqui a metodologia
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M2.5 2.5h9v9" stroke="#0095d9" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M11.5 2.5L2.5 11.5" stroke="#0095d9" stroke-width="1.4" stroke-linecap="round"/>
+      </svg>
+    </a>
+  </div>
+
+  <!-- ── CHART CARD ── -->
+  <div class="card">
+    <div class="chart-top">
+      <p class="chart-desc">Utilize os filtros abaixo para visualizar taxas referentes às curvas de crédito.</p>
+      <p class="chart-update">Última atualização da página às <b>HH:MM</b>. O gráfico atualizará automaticamente após 24h.</p>
+    </div>
+
+    <div class="chart-filters">
+      <!-- Data -->
+      <div class="filter-group">
+        <span class="filter-label">Data</span>
+        <div class="filter-input-wrap">
+          <input class="filter-input" type="text" value="09/07/2026" readonly style="width:176px;" />
+          <span class="input-icon">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <rect x="1" y="3" width="16" height="13" rx="2" stroke="#666" stroke-width="1.3"/>
+              <path d="M5 1v4M13 1v4" stroke="#666" stroke-width="1.3" stroke-linecap="round"/>
+              <path d="M1 7h16" stroke="#666" stroke-width="1.3"/>
+            </svg>
+          </span>
+        </div>
+      </div>
+      <!-- Visualização -->
+      <div class="filter-group">
+        <span class="filter-label">Visualização</span>
+        <div class="dropdown-btn" style="width:200px;">
+          <span class="dropdown-text">Comparativo</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M4 6l4 4 4-4" stroke="#666" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+      <button class="btn-clear">Limpar filtros</button>
+    </div>
+
+    <!-- Y label -->
+    <div class="chart-y-label">TAXA (% a.a.)</div>
+
+    <!-- Chart SVG -->
+    <div class="chart-svg-wrap">
+      <!--
+        Chart area: viewBox 0 0 1184 260
+        Plot region: x=58..1175, y=15..218
+        Width=1117, Height=203
+        Y range: 0 to 4.5% → y(v) = 218 - (v/4.5)*203
+          0.0467 → 218-2.1=215.9≈216
+          1.0467 → 218-47.3=170.7≈171
+          2.0467 → 218-92.4=125.6≈126
+          3.0467 → 218-137.6=80.4≈80
+          4.0467 → 218-182.7=35.3≈35
+        X range: 0.5..5 (9 steps of 0.5) → x(t)=58+(t-0.5)/4.5*1117
+          0.5→58, 1→182, 1.5→306, 2→430, 2.5→555, 3→679, 3.5→803, 4→927, 4.5→1051, 5→1175
+
+        AAA (blue): starts ~0.5% rises to ~2.5%
+          y(0.5%)=218-22.6=195  y(0.9%)=218-40.6=177  y(1.2%)=218-54.1=164
+          y(1.5%)=218-67.7=150  y(1.75%)=218-79.0=139  y(2.0%)=218-90.2=128
+          y(2.1%)=218-94.7=123  y(2.2%)=218-99.2=119  y(2.3%)=218-103.7=114  y(2.4%)=218-108.3=110
+
+        AA (green): starts ~0.9% rises to ~3.0%
+          y(0.9%)=177  y(1.35%)=218-60.9=157  y(1.75%)=139
+          y(2.1%)=123  y(2.4%)=110  y(2.6%)=218-117.4=101
+          y(2.75%)=218-124.1=94  y(2.85%)=218-128.6=89  y(2.95%)=218-133.1=85  y(3.0%)=218-135.3=83
+
+        A (orange): starts ~1.3% rises to ~4.0%
+          y(1.3%)=218-58.7=159  y(2.0%)=128  y(2.6%)=101
+          y(3.0%)=83  y(3.35%)=218-151.2=67  y(3.6%)=218-162.7=55
+          y(3.75%)=218-169.4=49  y(3.85%)=218-173.8=44  y(3.95%)=218-178.3=40  y(4.0%)=218-180.4=38
+      -->
+      <svg width="1184" height="260" viewBox="0 0 1184 260" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+        <!-- Horizontal gridlines -->
+        <line x1="58" y1="216" x2="1175" y2="216" stroke="#e8e8e8" stroke-width="1"/>
+        <line x1="58" y1="171" x2="1175" y2="171" stroke="#e8e8e8" stroke-width="1"/>
+        <line x1="58" y1="126" x2="1175" y2="126" stroke="#e8e8e8" stroke-width="1"/>
+        <line x1="58" y1="80"  x2="1175" y2="80"  stroke="#e8e8e8" stroke-width="1"/>
+        <line x1="58" y1="35"  x2="1175" y2="35"  stroke="#e8e8e8" stroke-width="1"/>
+
+        <!-- X axis baseline -->
+        <line x1="58" y1="218" x2="1175" y2="218" stroke="#d0d0d0" stroke-width="1"/>
+
+        <!-- Y axis labels -->
+        <text x="52" y="220" text-anchor="end" font-family="Lato,sans-serif" font-size="11" fill="#666">0,0467</text>
+        <text x="52" y="175" text-anchor="end" font-family="Lato,sans-serif" font-size="11" fill="#666">1,0467</text>
+        <text x="52" y="130" text-anchor="end" font-family="Lato,sans-serif" font-size="11" fill="#666">2,0467</text>
+        <text x="52" y="84"  text-anchor="end" font-family="Lato,sans-serif" font-size="11" fill="#666">3,0467</text>
+        <text x="52" y="39"  text-anchor="end" font-family="Lato,sans-serif" font-size="11" fill="#666">4,0467</text>
+
+        <!-- X axis tick labels -->
+        <text x="58"   y="238" text-anchor="middle" font-family="Lato,sans-serif" font-size="11" fill="#666">0,5</text>
+        <text x="182"  y="238" text-anchor="middle" font-family="Lato,sans-serif" font-size="11" fill="#666">1</text>
+        <text x="306"  y="238" text-anchor="middle" font-family="Lato,sans-serif" font-size="11" fill="#666">1,5</text>
+        <text x="430"  y="238" text-anchor="middle" font-family="Lato,sans-serif" font-size="11" fill="#666">2</text>
+        <text x="555"  y="238" text-anchor="middle" font-family="Lato,sans-serif" font-size="11" fill="#666">2,5</text>
+        <text x="679"  y="238" text-anchor="middle" font-family="Lato,sans-serif" font-size="11" fill="#666">3</text>
+        <text x="803"  y="238" text-anchor="middle" font-family="Lato,sans-serif" font-size="11" fill="#666">3,5</text>
+        <text x="927"  y="238" text-anchor="middle" font-family="Lato,sans-serif" font-size="11" fill="#666">4</text>
+        <text x="1051" y="238" text-anchor="middle" font-family="Lato,sans-serif" font-size="11" fill="#666">4,5</text>
+        <text x="1175" y="238" text-anchor="middle" font-family="Lato,sans-serif" font-size="11" fill="#666">5</text>
+
+        <!--
+          Bezier curves for smooth rendering
+          Control points chosen to produce smooth concave-up then flattening curves.
+        -->
+
+        <!-- AAA (blue #4a90d9) -->
+        <path d="
+          M 58,195
+          C 120,185 160,175 182,177
+          C 240,168 280,162 306,162
+          C 370,152 400,148 430,149
+          C 490,140 525,137 555,137
+          C 615,129 650,127 679,127
+          C 740,122 775,121 803,121
+          C 860,117 895,116 927,116
+          C 990,113 1025,112 1051,112
+          C 1110,110 1145,109 1175,109
+        " fill="none" stroke="#4a90d9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+        <!-- AA (green #5baa4f) -->
+        <path d="
+          M 58,177
+          C 120,165 160,158 182,156
+          C 240,146 280,139 306,137
+          C 370,126 400,122 430,121
+          C 490,111 525,108 555,108
+          C 615,101 650,99 679,98
+          C 740,93 775,91 803,90
+          C 860,87 895,86 927,85
+          C 990,83 1025,82 1051,81
+          C 1110,79 1145,78 1175,78
+        " fill="none" stroke="#5baa4f" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+        <!-- A (orange #f5a623) -->
+        <path d="
+          M 58,158
+          C 120,142 160,132 182,128
+          C 240,113 280,104 306,101
+          C 370,87 400,82 430,80
+          C 490,68 525,64 555,63
+          C 615,55 650,52 679,51
+          C 740,47 775,45 803,44
+          C 860,41 895,40 927,39
+          C 990,37 1025,36 1051,36
+          C 1110,34 1145,33 1175,32
+        " fill="none" stroke="#f5a623" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+        <!-- Start dots -->
+        <circle cx="58" cy="195" r="4.5" fill="#4a90d9"/>
+        <circle cx="58" cy="177" r="4.5" fill="#5baa4f"/>
+        <circle cx="58" cy="158" r="4.5" fill="#f5a623"/>
+      </svg>
+    </div>
+
+    <!-- Legend row -->
+    <div class="chart-bottom-row">
+      <div class="legend-items">
+        <div class="legend-item"><span class="legend-dot aaa"></span> AAA</div>
+        <div class="legend-item"><span class="legend-dot aa"></span>  AA</div>
+        <div class="legend-item"><span class="legend-dot a"></span>   A</div>
+      </div>
+      <span class="vertices-label">VÉRTICES (ANOS)</span>
+    </div>
+
+    <!-- Footnote -->
+    <div class="chart-footnote">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <circle cx="8" cy="8" r="6.5" stroke="#666" stroke-width="1.3"/>
+        <circle cx="8" cy="5.5" r="0.8" fill="#666"/>
+        <path d="M8 7.5v4" stroke="#666" stroke-width="1.3" stroke-linecap="round"/>
+      </svg>
+      DI Interpolado pelo método de Svensson
+    </div>
+  </div><!-- /chart card -->
+
+
+  <!-- ── TABLE CARD ── -->
+  <div class="card">
+    <div class="table-top">
+      <h2 class="table-card-title">Curvas de Crédito - Ratings</h2>
+      <div class="table-filters">
+        <!-- Data range -->
+        <div class="filter-group">
+          <span class="filter-label">Data</span>
+          <div class="filter-input-wrap">
+            <input class="filter-input" type="text" value="09/07/2026 - 05/07/2026" readonly style="width:242px;" />
+            <span class="input-icon">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <rect x="1" y="3" width="16" height="13" rx="2" stroke="#666" stroke-width="1.3"/>
+                <path d="M5 1v4M13 1v4" stroke="#666" stroke-width="1.3" stroke-linecap="round"/>
+                <path d="M1 7h16" stroke="#666" stroke-width="1.3"/>
+              </svg>
+            </span>
+          </div>
+        </div>
+        <!-- Vértices -->
+        <div class="filter-group">
+          <span class="filter-label">Vértices (Anos)</span>
+          <div class="dropdown-btn" style="width:196px;">
+            <span class="dropdown-text">Todos</span>
+            <span class="dropdown-count">(20)</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M4 6l4 4 4-4" stroke="#666" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+        <!-- Ratings -->
+        <div class="filter-group">
+          <span class="filter-label">Ratings</span>
+          <div class="dropdown-btn" style="width:180px;">
+            <span class="dropdown-text">Todos</span>
+            <span class="dropdown-count">(3)</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M4 6l4 4 4-4" stroke="#666" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+        <button class="btn-clear">Limpar filtros</button>
+        <div class="flex-spacer"></div>
+        <!-- Download -->
+        <button class="btn-download">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M8 2v8M4.5 7l3.5 3.5 3.5-3.5" stroke="#0095d9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M2 13h12" stroke="#0095d9" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          Download
+        </button>
+      </div>
+    </div>
+
+    <div class="table-outer">
+      <div class="table-scroll">
+        <table class="data-table">
+          <colgroup>
+            <col class="col-vertices"/>
+            <col class="col-rating"/>
+            <col class="col-rating"/>
+            <col class="col-last"/>
+          </colgroup>
+          <thead>
+            <tr>
+              <th>Vértices (Anos)</th>
+              <th>AAA</th>
+              <th>AA</th>
+              <th>A</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>0,5</td><td>0,2960</td><td>0,8861</td><td>2,6378</td></tr>
+            <tr><td>1</td><td>0,2960</td><td>0,8861</td><td>2,6378</td></tr>
+            <tr><td>1,5</td><td>0,2960</td><td>0,8861</td><td>2,6378</td></tr>
+            <tr><td>2</td><td>0,2960</td><td>0,8861</td><td>2,6378</td></tr>
+            <tr><td>2,5</td><td>0,2960</td><td>0,8861</td><td>2,6378</td></tr>
+            <tr><td>3</td><td>0,2960</td><td>0,8861</td><td>2,6378</td></tr>
+            <tr><td>3,5</td><td>0,2960</td><td>0,8861</td><td>2,6378</td></tr>
+            <tr><td>4</td><td>0,2960</td><td>0,8861</td><td>2,6378</td></tr>
+            <tr><td>4,5</td><td>0,2960</td><td>0,8861</td><td>2,6378</td></tr>
+            <tr><td>5</td><td>0,2960</td><td>0,8861</td><td>2,6378</td></tr>
+            <tr><td>5,5</td><td>0,2960</td><td>0,8861</td><td>2,6378</td></tr>
+            <tr><td>6</td><td>0,2960</td><td>0,8861</td><td>2,6378</td></tr>
+            <tr><td>6,5</td><td>0,2960</td><td>0,8861</td><td>2,6378</td></tr>
+            <tr><td>7</td><td>0,2960</td><td>0,8861</td><td>2,6378</td></tr>
+            <tr><td>7,5</td><td>0,2960</td><td>0,8861</td><td>2,6378</td></tr>
+            <tr><td>8</td><td>0,2960</td><td>0,8861</td><td>2,6378</td></tr>
+            <tr><td>8,5</td><td>0,2960</td><td>0,8861</td><td>2,6378</td></tr>
+            <tr><td>9</td><td>0,2960</td><td>0,8861</td><td>2,6378</td></tr>
+            <tr><td>9,5</td><td>0,2960</td><td>0,8861</td><td>2,6378</td></tr>
+            <tr><td>10</td><td>0,2960</td><td>0,8861</td><td>2,6378</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div><!-- /table card -->
+
+
+  <!-- ── BANNER ── -->
+  <div class="banner">
+    <div class="banner-left">
+      <!-- Icon: coin/money circle -->
+      <div class="banner-icon-wrap">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="24" cy="24" r="22" fill="#f5a623"/>
+          <circle cx="24" cy="24" r="18" fill="#f5a623" stroke="#fff" stroke-width="1" stroke-opacity="0.4"/>
+          <text x="24" y="31" text-anchor="middle" font-family="Lato,sans-serif" font-size="22" font-weight="700" fill="#fff">$</text>
+        </svg>
+      </div>
+      <div class="banner-text">
+        <h3>Quer acesso ao histórico completo de preços da ANBIMA?</h3>
+        <p>O ANBIMA Feed é a plataforma para quem busca uma API com informações completas e atualizadas sobre o mercado de capitais.</p>
+      </div>
+    </div>
+    <button class="banner-btn">
+      Saiba mais
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M2.5 2.5h9v9" stroke="#0095d9" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M11.5 2.5L2.5 11.5" stroke="#0095d9" stroke-width="1.4" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+
+</div><!-- /page-wrap -->
+
+
+<!-- ════════════ FOOTER ════════════ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <!-- Logo white -->
+    <div class="footer-logo-col">
+      <svg width="68" height="44" viewBox="0 0 68 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 3C0 1.34315 1.34315 0 3 0H12C13.1046 0 14 0.895431 14 2V42C14 43.1046 13.1046 44 12 44H3C1.34315 44 0 42.6569 0 41V3Z" fill="#0095d9"/>
+        <path d="M3 7L7 2L11 7V16H3V7Z" fill="#fff" opacity="0.9"/>
+        <path d="M3 19H11V27H3V19Z" fill="#fff" opacity="0.7"/>
+        <path d="M3 30H11V38C11 39.1046 10.1046 40 9 40H3V30Z" fill="#fff" opacity="0.5"/>
+        <text x="19" y="17" font-family="Lato,sans-serif" font-size="11" font-weight="700" fill="#fff" letter-spacing="0.3">ANBIMA</text>
+        <text x="19" y="31" font-family="Lato,sans-serif" font-size="11" font-weight="400" fill="#0095d9" letter-spacing="1">data</text>
+      </svg>
+    </div>
+
+    <div class="footer-nav">
+      <div class="footer-col">
+        <h4>ANBIMA</h4>
+        <ul>
+          <li><a href="#">Portal ANBIMA</a></li>
+          <li><a href="#">ANBIMA Feed</a></li>
+          <li><a href="#">ANBIMA Edu</a></li>
+          <li><a href="#">Dúvidas e feedbacks</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>MAIS INFORMAÇÕES</h4>
+        <ul>
+          <li><a href="#">Regras de privacidade</a></li>
+          <li><a href="#">Termos de uso</a></li>
+          <li><a href="#">Transparência e governança</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <p class="footer-version">Versão: 7.6.1</p>
+        <p class="footer-disclaimer">
+          As fontes das informações apresentadas são ANBIMA, B3, CVM, demais participantes das ofertas de debêntures e responsáveis pelos fundos de investimento. Este site é protegido pelo reCAPTCHA, consulte a <a href="#">Política de privacidade</a> e os <a href="#">Termos de serviço do Google</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
