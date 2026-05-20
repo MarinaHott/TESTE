@@ -365,11 +365,22 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: #1565c0;
+      background: #1070bd;
       border-radius: 8px;
       padding: 24px 32px;
       width: 1232px;
       gap: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .banner-bg-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      pointer-events: none;
+      border-radius: 8px;
     }
     .banner-left {
       display: flex;
@@ -395,10 +406,10 @@
       background: #fff;
       color: #0095d9;
       font-family: 'Lato', sans-serif;
-      font-size: 14px;
+      font-size: 16px;
       font-weight: 700;
-      height: 40px;
-      padding: 0 20px;
+      padding: 12px 16px;
+      position: relative;
       border-radius: 4px;
       border: none;
       cursor: pointer;
@@ -408,52 +419,54 @@
 
     /* ── FOOTER ── */
     .footer {
-      background: #191919;
-      padding: 48px 72px 40px;
+      background: #161616;
+      padding: 40px 72px;
       margin-top: 48px;
     }
     .footer-inner {
       display: flex;
       gap: 80px;
+      align-items: flex-start;
     }
     .footer-logo-col {
       flex-shrink: 0;
     }
     .footer-nav {
       display: flex;
-      gap: 80px;
+      gap: 24px;
       flex: 1;
     }
+    .footer-col { flex: 1; }
     .footer-col h4 {
-      font-size: 12px;
+      font-size: 14px;
       font-weight: 700;
-      color: #fff;
+      color: #919191;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
       margin-bottom: 16px;
-      line-height: 16px;
+      line-height: 24px;
     }
     .footer-col ul { list-style: none; }
-    .footer-col li { margin-bottom: 12px; }
+    .footer-col li { margin-bottom: 16px; }
+    .footer-col li:last-child { margin-bottom: 0; }
     .footer-col a {
-      font-size: 14px;
-      color: rgba(255,255,255,0.65);
-      line-height: 20px;
+      font-size: 16px;
+      color: #fefefe;
+      line-height: 24px;
     }
+    .footer-info { flex: 1; display: flex; flex-direction: column; gap: 4px; }
     .footer-version {
       font-size: 14px;
-      color: rgba(255,255,255,0.65);
-      margin-bottom: 8px;
-      line-height: 20px;
+      font-weight: 700;
+      color: #919191;
+      line-height: 24px;
     }
     .footer-disclaimer {
-      font-size: 12px;
-      color: rgba(255,255,255,0.5);
-      line-height: 18px;
-      max-width: 340px;
+      font-size: 14px;
+      color: #919191;
+      line-height: 20px;
     }
     .footer-disclaimer a {
-      color: rgba(255,255,255,0.65);
+      color: #919191;
       text-decoration: underline;
     }
   </style>
@@ -462,30 +475,18 @@
 
 <!-- ════════════ NAVBAR ════════════ -->
 <nav class="navbar">
-  <!-- ANBIMA DATA logo — circular brand mark + stacked text -->
-  <svg width="83" height="38" viewBox="0 0 83 38" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <!-- Outer navy circle -->
-    <circle cx="17" cy="19" r="15" fill="#1a2e5a"/>
-    <!-- Yellow wedge (top-right segment) -->
-    <path d="M17,19 L17,4.5 A14.5,14.5,0,0,1,30.5,24.5 Z" fill="#f5c400"/>
-    <!-- Inner white donut hole -->
-    <circle cx="17" cy="19" r="6" fill="#fff"/>
-    <!-- "ANBIMA" small bold -->
-    <text x="36" y="15" font-family="Lato,sans-serif" font-size="9" font-weight="700" fill="#1a2e5a" letter-spacing="0.3">ANBIMA</text>
-    <!-- "DATA" large bold -->
-    <text x="35" y="33" font-family="Lato,sans-serif" font-size="19" font-weight="700" fill="#1a2e5a">DATA</text>
-  </svg>
+  <img src="https://www.figma.com/api/mcp/asset/13189b9f-6895-445f-9b5f-e7b2274909a9" width="83" height="38" alt="ANBIMA DATA" style="display:block;">
 
   <div class="nav-right">
     <div class="nav-menus">
       <div class="menu-item">
         <a href="#">Dados de mercado&nbsp;
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M7 10l5 5 5-5" stroke="#666" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <img src="https://www.figma.com/api/mcp/asset/776285e4-9522-4f9d-9118-702c46cbc69d" width="24" height="24" alt="">
         </a>
       </div>
       <div class="menu-item">
         <a href="#">Publicações&nbsp;
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M7 10l5 5 5-5" stroke="#666" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <img src="https://www.figma.com/api/mcp/asset/776285e4-9522-4f9d-9118-702c46cbc69d" width="24" height="24" alt="">
         </a>
       </div>
       <div class="menu-item">
@@ -493,15 +494,11 @@
       </div>
       <div class="menu-item">
         <a href="#">Ferramentas&nbsp;
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M7 10l5 5 5-5" stroke="#666" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <img src="https://www.figma.com/api/mcp/asset/776285e4-9522-4f9d-9118-702c46cbc69d" width="24" height="24" alt="">
         </a>
       </div>
     </div>
-    <!-- Compass / plus icon -->
-    <svg width="21" height="21" viewBox="0 0 21 21" fill="none">
-      <circle cx="10.5" cy="10.5" r="9.5" stroke="#0095d9" stroke-width="1.2"/>
-      <path d="M10.5 6.5v8M6.5 10.5h8" stroke="#0095d9" stroke-width="1.5" stroke-linecap="round"/>
-    </svg>
+    <img src="https://www.figma.com/api/mcp/asset/f8cb85bb-c25a-4805-918c-31324c0cdcfc" width="21" height="21" alt="" style="display:block;">
     <!-- Search -->
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
       <circle cx="10.5" cy="10.5" r="6.5" stroke="#363636" stroke-width="1.8"/>
@@ -609,8 +606,8 @@
         <line x1="58" y1="216" x2="1175" y2="216" stroke="#e8e8e8" stroke-width="1"/>
         <line x1="58" y1="171" x2="1175" y2="171" stroke="#e8e8e8" stroke-width="1"/>
         <line x1="58" y1="126" x2="1175" y2="126" stroke="#e8e8e8" stroke-width="1"/>
-        <line x1="58" y1="80"  x2="1175" y2="80"  stroke="#e8e8e8" stroke-width="1"/>
-        <line x1="58" y1="35"  x2="1175" y2="35"  stroke="#e8e8e8" stroke-width="1"/>
+        <line x1="58" y1="81"  x2="1175" y2="81"  stroke="#e8e8e8" stroke-width="1"/>
+        <line x1="58" y1="36"  x2="1175" y2="36"  stroke="#e8e8e8" stroke-width="1"/>
 
         <!-- X axis baseline -->
         <line x1="58" y1="217" x2="1175" y2="217" stroke="#d4d4d4" stroke-width="1"/>
@@ -619,8 +616,8 @@
         <text x="52" y="220" text-anchor="end" font-family="Lato,sans-serif" font-size="11" fill="#666">0,0467</text>
         <text x="52" y="175" text-anchor="end" font-family="Lato,sans-serif" font-size="11" fill="#666">1,0467</text>
         <text x="52" y="130" text-anchor="end" font-family="Lato,sans-serif" font-size="11" fill="#666">2,0467</text>
-        <text x="52" y="84"  text-anchor="end" font-family="Lato,sans-serif" font-size="11" fill="#666">3,0467</text>
-        <text x="52" y="39"  text-anchor="end" font-family="Lato,sans-serif" font-size="11" fill="#666">4,0467</text>
+        <text x="52" y="85"  text-anchor="end" font-family="Lato,sans-serif" font-size="11" fill="#666">3,0467</text>
+        <text x="52" y="40"  text-anchor="end" font-family="Lato,sans-serif" font-size="11" fill="#666">4,0467</text>
 
         <!-- X axis labels -->
         <text x="58"   y="234" text-anchor="middle" font-family="Lato,sans-serif" font-size="11" fill="#666">0,5</text>
@@ -634,18 +631,18 @@
         <text x="1051" y="234" text-anchor="middle" font-family="Lato,sans-serif" font-size="11" fill="#666">4,5</text>
         <text x="1175" y="234" text-anchor="middle" font-family="Lato,sans-serif" font-size="11" fill="#666">5</text>
 
-        <!-- AAA — azul, inicia ~0.3% perto da base, sobe suavemente até ~2.6% -->
-        <path d="M 58,205 C 226,142 840,103 1175,100"
+        <!-- AAA — azul: inicia em ~0.047% (base), termina ~2.56% -->
+        <path d="M 58,216 C 230,105 700,103 1175,103"
               fill="none" stroke="#4a90d9" stroke-width="2.5"
               stroke-linecap="round" stroke-linejoin="round"/>
 
-        <!-- AA — verde, inicia ~1.05% (na linha 1,0467), sobe até ~3.0% -->
-        <path d="M 58,171 C 226,110 840,84 1175,81"
+        <!-- AA — verde: inicia em ~0.9% (abaixo da linha 1.0467), termina ~3.0% -->
+        <path d="M 58,178 C 230,85 700,83 1175,83"
               fill="none" stroke="#5baa4f" stroke-width="2.5"
               stroke-linecap="round" stroke-linejoin="round"/>
 
-        <!-- A — laranja, inicia ~2.34% (entre 2,0467 e 3,0467), sobe até ~4.3% -->
-        <path d="M 58,103 C 226,55 840,27 1175,24"
+        <!-- A — laranja: inicia em ~2.0% (na linha 2.0467), termina ~4.0% -->
+        <path d="M 58,127 C 230,40 700,38 1175,38"
               fill="none" stroke="#f5a623" stroke-width="2.5"
               stroke-linecap="round" stroke-linejoin="round"/>
 
@@ -775,17 +772,9 @@
 
   <!-- ── BANNER ── -->
   <div class="banner">
-    <div class="banner-left">
-      <!-- ANBIMA Feed icon — círculo laranja com segmentos de dados -->
-      <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
-        <circle cx="22" cy="22" r="20" fill="#f5a623"/>
-        <!-- pie segments internos simulando dados/feed -->
-        <path d="M22,22 L22,6 A16,16,0,0,1,37,28 Z" fill="rgba(255,255,255,0.3)"/>
-        <path d="M22,22 L37,28 A16,16,0,0,1,8,29 Z"  fill="rgba(255,255,255,0.15)"/>
-        <circle cx="22" cy="22" r="7" fill="rgba(255,255,255,0.9)"/>
-        <!-- ponto central -->
-        <circle cx="22" cy="22" r="2.5" fill="#f5a623"/>
-      </svg>
+    <img src="https://www.figma.com/api/mcp/asset/cd8762a9-ee6e-4180-a942-226c4ff5bb63" class="banner-bg-img" alt="">
+    <div class="banner-left" style="position:relative;">
+      <img src="https://www.figma.com/api/mcp/asset/e2992436-d3b4-414a-ad18-48c65d4b3077" width="32" height="32" alt="" style="flex-shrink:0;position:relative;">
       <div class="banner-text">
         <h3>Quer acesso ao histórico completo de preços da ANBIMA?</h3>
         <p>O ANBIMA Feed é a plataforma para quem busca uma API com informações completas e atualizadas sobre o mercado de capitais.</p>
@@ -793,12 +782,7 @@
     </div>
     <button class="banner-btn">
       Saiba mais
-      <!-- ícone external link -->
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-        <rect x="1" y="4" width="9" height="9" rx="1" stroke="#0095d9" stroke-width="1.3"/>
-        <path d="M7 1h6v6" stroke="#0095d9" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M13 1L7 7" stroke="#0095d9" stroke-width="1.3" stroke-linecap="round"/>
-      </svg>
+      <img src="https://www.figma.com/api/mcp/asset/af10b6bd-2d02-4e43-8e27-85dd70f441bc" width="24" height="24" alt="" style="flex-shrink:0;position:relative;">
     </button>
   </div>
 
@@ -808,18 +792,8 @@
 <!-- ════════════ FOOTER ════════════ -->
 <footer class="footer">
   <div class="footer-inner">
-    <!-- ANBIMA DATA logo — versão branca sobre fundo escuro -->
     <div class="footer-logo-col">
-      <svg width="80" height="46" viewBox="0 0 80 46" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <!-- Círculo da marca (branco translúcido no fundo escuro) -->
-        <circle cx="17" cy="23" r="15" fill="#1a2e5a"/>
-        <path d="M17,23 L17,8.5 A14.5,14.5,0,0,1,30.5,28.5 Z" fill="#f5c400"/>
-        <circle cx="17" cy="23" r="6" fill="#fff" opacity="0.9"/>
-        <!-- "ANBIMA" pequeno branco -->
-        <text x="36" y="18" font-family="Lato,sans-serif" font-size="9" font-weight="700" fill="#fff" letter-spacing="0.3">ANBIMA</text>
-        <!-- "DATA" grande branco -->
-        <text x="35" y="37" font-family="Lato,sans-serif" font-size="19" font-weight="700" fill="#fff">DATA</text>
-      </svg>
+      <img src="https://www.figma.com/api/mcp/asset/3799a4b8-5956-43d3-abf9-665aa041590a" width="83" height="38" alt="ANBIMA DATA" style="display:block;">
     </div>
 
     <div class="footer-nav">
@@ -840,12 +814,12 @@
           <li><a href="#">Transparência e governança</a></li>
         </ul>
       </div>
-      <div class="footer-col">
-        <p class="footer-version">Versão: 7.6.1</p>
-        <p class="footer-disclaimer">
-          As fontes das informações apresentadas são ANBIMA, B3, CVM, demais participantes das ofertas de debêntures e responsáveis pelos fundos de investimento. Este site é protegido pelo reCAPTCHA, consulte a <a href="#">Política de privacidade</a> e os <a href="#">Termos de serviço do Google</a>.
-        </p>
-      </div>
+    </div><!-- /footer-nav -->
+    <div class="footer-info">
+      <p class="footer-version">Versão: 7.6.1</p>
+      <p class="footer-disclaimer">
+        As fontes das informações apresentadas são ANBIMA, B3, CVM, demais participantes das ofertas de debêntures e responsáveis pelos fundos de investimento. Este site é protegido pelo reCAPTCHA, consulte a <a href="#">Política de privacidade</a> e os <a href="#">Termos de serviço do Google</a>.
+      </p>
     </div>
   </div>
 </footer>
