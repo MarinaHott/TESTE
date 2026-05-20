@@ -1,4 +1,4 @@
-const ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
+const ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
 
 const SYSTEM_PROMPT = `Você é um assistente que resume conversas de grupos do WhatsApp em português brasileiro.
 Analise a conversa e forneça um resumo estruturado com:
