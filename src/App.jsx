@@ -4,6 +4,7 @@ import { parseMessages, filterMessages, formatForGemini } from './utils/parseWha
 import { summarize } from './utils/gemini'
 
 const FILTERS = [
+  { value: 'all', label: 'Todas as mensagens' },
   { value: 'since-last', label: 'Desde minha última mensagem' },
   { value: 'last-24h', label: 'Últimas 24 horas' },
   { value: 'last-7d', label: 'Últimos 7 dias' },
@@ -70,7 +71,7 @@ function SettingsScreen({ onSave }) {
 
 function MainScreen({ onSettings }) {
   const [file, setFile] = useState(null)
-  const [filter, setFilter] = useState('since-last')
+  const [filter, setFilter] = useState('all')
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState('')
   const [error, setError] = useState('')
