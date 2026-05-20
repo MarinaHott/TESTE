@@ -1,13 +1,17 @@
 // Parses Brazilian WhatsApp export format: [DD/MM/AAAA, HH:MM:SS] Nome: mensagem
-// Strips leading Unicode directional marks (U+200E/U+200F) exported by WhatsApp
 const MSG_REGEX = /^\[(\d{2}\/\d{2}\/\d{4}), (\d{2}:\d{2}:\d{2})\] ([^:]+): (.*)$/;
 
+function cleanLine(line) {
+  // Remove U+200E (LRM) and other invisible marks WhatsApp adds before timestamps
+  return line.replace(/[‎‏﻿‪-‮]/g, '');
+}
+
 export function parseMessages(text) {
-  const lines = text.split('\n');
+  const lines = text.replace(/\r/g, '').split('\n');
   const messages = [];
 
   for (const rawLine of lines) {
-    const line = rawLine.replace(/[‎‏﻿]/g, '');
+    const line = cleanLine(rawLine);
     const match = line.match(MSG_REGEX);
     if (match) {
       const [, date, time, sender, content] = match;
