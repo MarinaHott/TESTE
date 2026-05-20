@@ -89,6 +89,7 @@ function MainScreen({ onSettings }) {
       const apiKey = localStorage.getItem('gemini_key')
       const userName = localStorage.getItem('user_name') || ''
 
+      const MAX_MSGS = 300
       const messages = parseMessages(text)
       const filtered = filterMessages(messages, filter, userName)
 
@@ -98,8 +99,9 @@ function MainScreen({ onSettings }) {
         return
       }
 
-      setMsgCount(filtered.length)
-      const conversation = formatForGemini(filtered)
+      const trimmed = filtered.slice(-MAX_MSGS)
+      setMsgCount(trimmed.length)
+      const conversation = formatForGemini(trimmed)
       const summary = await summarize(apiKey, conversation)
       setResult(summary)
     } catch (err) {
