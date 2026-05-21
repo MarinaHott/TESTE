@@ -1,6 +1,11 @@
 const ENDPOINT = 'https://api.groq.com/openai/v1/chat/completions'
 const MODEL = 'llama-3.3-70b-versatile'
 
+// Groq free tier: 12k TPM. Each chunk ~1.5k tokens in + ~500 out = ~2k per call.
+// Wait 12s between chunks to safely stay under the per-minute limit.
+const CHUNK_CHARS = 6000  // ~1500 tokens
+const INTER_CHUNK_DELAY_MS = 12000
+
 const SYSTEM_PROMPT = `Você é um assistente que resume conversas de grupos do WhatsApp em português brasileiro.
 
 Para grupos de conteúdo (milhas, notícias, ofertas, links): destaque os tópicos principais e o que vale a pena ler ou acompanhar.
@@ -8,31 +13,31 @@ Para grupos pessoais (amigos, família, trabalho): destaque convites, combinados
 
 Responda SEMPRE em bullet points curtos e diretos. Seja objetivo e conciso.`
 
-export async function summarize(apiKey, conversationText) {
-  const estimated = Math.ceil(conversationText.length / 4)
-  const CHUNK_TOKENS = 3000
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
 
-  if (estimated <= CHUNK_TOKENS) {
-    return await callGroq(apiKey, buildPrompt(conversationText))
+export async function summarize(apiKey, conversationText) {
+  if (conversationText.length <= CHUNK_CHARS) {
+    return callGroq(apiKey, buildPrompt(conversationText))
   }
 
-  // Split into chunks and summarize each, then consolidate
-  const chunkSize = CHUNK_TOKENS * 4
+  // Split into chunks with delay between calls
   const chunks = []
-  for (let i = 0; i < conversationText.length; i += chunkSize) {
-    chunks.push(conversationText.slice(i, i + chunkSize))
+  for (let i = 0; i < conversationText.length; i += CHUNK_CHARS) {
+    chunks.push(conversationText.slice(i, i + CHUNK_CHARS))
   }
 
   const partials = []
-  for (const chunk of chunks) {
-    const partial = await callGroq(apiKey, buildPrompt(chunk))
+  for (let i = 0; i < chunks.length; i++) {
+    if (i > 0) await sleep(INTER_CHUNK_DELAY_MS)
+    const partial = await callGroq(apiKey, buildPrompt(chunks[i]))
     partials.push(partial)
   }
 
   if (partials.length === 1) return partials[0]
 
+  await sleep(INTER_CHUNK_DELAY_MS)
   const consolidated = partials.map((p, i) => `Parte ${i + 1}:\n${p}`).join('\n\n')
-  return await callGroq(
+  return callGroq(
     apiKey,
     `A seguir estão resumos parciais de uma conversa longa. Consolide em um único resumo final em bullet points curtos, eliminando repetições:\n\n${consolidated}`
   )
