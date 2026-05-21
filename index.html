@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Resumo WA</title>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Resumo WA">
+  <link rel="apple-touch-icon" href="/icon-192.png">
+  <meta name="theme-color" content="#075E54">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --green:      #25D366;
+      --dark-green: #075E54;
+      --mid-green:  #128C7E;
+      --bubble:     #DCF8C6;
+      --bg:         #f0f2f5;
+      --white:      #ffffff;
+      --gray:       #8696a0;
+      --text:       #111b21;
+      --border:     #d1d7db;
+      --red:        #f44336;
+    }
+    html, body { height: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); font-size: 15px; }
+    header { background: var(--dark-green); color: #fff; display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; position: sticky; top: 0; z-index: 50; }
+    header h1 { font-size: 19px; font-weight: 600; letter-spacing: 0.2px; }
+    header span.sub { font-size: 12px; opacity: 0.75; margin-top: 1px; display: block; }
+    .btn-settings { background: none; border: none; cursor: pointer; padding: 6px; color: #fff; border-radius: 50%; }
+    .btn-settings:hover { background: rgba(255,255,255,0.12); }
+    .btn-settings svg { display: block; }
+    main { max-width: 640px; margin: 0 auto; padding: 16px 12px 100px; }
+    .filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+    .filter-btn { flex: 1; min-width: 0; padding: 9px 10px; border-radius: 10px; border: 2px solid transparent; background: var(--white); font-size: 12px; font-weight: 600; color: var(--gray); cursor: pointer; text-align: center; transition: all 0.15s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .filter-btn.active { background: var(--dark-green); color: #fff; border-color: var(--dark-green); }
+    .filter-btn:not(.active):hover { border-color: var(--mid-green); color: var(--mid-green); }
+    .paste-area { background: var(--white); border-radius: 12px; border: 1.5px solid var(--border); padding: 0; margin-bottom: 12px; overflow: hidden; }
+    .paste-label { display: flex; align-items: center; gap: 8px; padding: 10px 14px 0; font-size: 12px; font-weight: 700; color: var(--gray); text-transform: uppercase; letter-spacing: 0.5px; }
+    #chat-input { width: 100%; min-height: 160px; max-height: 300px; border: none; outline: none; resize: vertical; padding: 10px 14px 14px; font-family: 'Courier New', monospace; font-size: 12.5px; line-height: 1.5; color: var(--text); background: transparent; }
+    #chat-input::placeholder { color: #aaa; }
+    .msg-count { padding: 6px 14px 8px; font-size: 11px; color: var(--gray); border-top: 1px solid var(--bg); }
+    .btn-summarize { width: 100%; padding: 15px; background: var(--green); color: #fff; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background 0.15s, opacity 0.15s; margin-bottom: 16px; }
+    .btn-summarize:hover { background: var(--mid-green); }
+    .btn-summarize:disabled { opacity: 0.55; cursor: not-allowed; }
+    .spinner { width: 20px; height: 20px; border: 3px solid rgba(255,255,255,0.4); border-top-color: #fff; border-radius: 50%; animation: spin 0.7s linear infinite; display: none; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .result-card { background: var(--white); border-radius: 12px; border-left: 4px solid var(--green); overflow: hidden; display: none; }
+    .result-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; background: var(--bubble); }
+    .result-title { font-size: 13px; font-weight: 700; color: var(--dark-green); }
+    .result-meta { font-size: 11px; color: var(--gray); }
+    .btn-copy { background: var(--dark-green); color: #fff; border: none; border-radius: 8px; padding: 6px 14px; font-size: 13px; font-weight: 600; cursor: pointer; }
+    .btn-copy:hover { background: var(--mid-green); }
+    #result-text { padding: 14px; font-size: 14px; line-height: 1.7; white-space: pre-wrap; color: var(--text); }
+    .progress-wrap { display: none; background: var(--white); border-radius: 12px; padding: 12px 14px; margin-bottom: 12px; }
+    .progress-label { font-size: 13px; color: var(--gray); margin-bottom: 8px; }
+    .progress-bar { height: 4px; background: #e0e0e0; border-radius: 2px; overflow: hidden; }
+    .progress-fill { height: 100%; background: var(--green); border-radius: 2px; transition: width 0.3s ease; width: 0%; }
+    .error-card { background: #ffeaea; border: 1px solid #ffcdd2; border-radius: 12px; padding: 14px; font-size: 13.5px; color: #b71c1c; display: none; margin-bottom: 12px; }
+    .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 100; display: none; align-items: flex-end; justify-content: center; }
+    .overlay.open { display: flex; }
+    .settings-sheet { background: var(--white); border-radius: 20px 20px 0 0; width: 100%; max-width: 640px; padding: 20px 16px 40px; animation: slideUp 0.25s ease; }
+    @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+    .sheet-handle { width: 40px; height: 4px; background: #ddd; border-radius: 2px; margin: 0 auto 20px; }
+    .sheet-title { font-size: 17px; font-weight: 700; margin-bottom: 20px; color: var(--text); }
+    .field { margin-bottom: 16px; }
+    .field label { display: block; font-size: 12px; font-weight: 700; color: var(--gray); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+    .field input { width: 100%; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 10px; font-size: 15px; color: var(--text); font-family: inherit; background: var(--bg); }
+    .field input:focus { outline: none; border-color: var(--mid-green); background: #fff; }
+    .field .hint { font-size: 11px; color: var(--gray); margin-top: 4px; }
+    .btn-save { width: 100%; padding: 14px; background: var(--dark-green); color: #fff; border: none; border-radius: 10px; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 4px; }
+    .btn-save:hover { background: var(--mid-green); }
+    .key-status { font-size: 12px; margin-top: 6px; padding: 6px 10px; border-radius: 6px; display: none; }
+    .key-status.ok { background: var(--bubble); color: var(--dark-green); }
+    .key-status.err { background: #ffeaea; color: var(--red); }
+  </style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>Resumo WA 📋</h1>
+    <span class="sub">Cola o export, escolha o filtro, resumo na hora</span>
+  </div>
+  <button class="btn-settings" id="btn-settings" title="Configurações">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+    </svg>
+  </button>
+</header>
+<main>
+  <div class="filters">
+    <button class="filter-btn active" data-filter="since-me">Desde minha última msg</button>
+    <button class="filter-btn" data-filter="24h">Últimas 24h</button>
+    <button class="filter-btn" data-filter="7d">Últimos 7 dias</button>
+    <button class="filter-btn" data-filter="all">Tudo</button>
+  </div>
+  <div class="paste-area">
+    <div class="paste-label">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      Export do WhatsApp
+    </div>
+    <textarea id="chat-input" placeholder="[23/04/2024, 18:30:45] Marina Hott: Oi pessoal&#10;[23/04/2024, 18:31:00] João: Oi!&#10;..."></textarea>
+    <div class="msg-count" id="msg-count">Cole o export acima (WhatsApp → Conversa → Exportar)</div>
+  </div>
+  <div class="progress-wrap" id="progress-wrap">
+    <div class="progress-label" id="progress-label">Resumindo…</div>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+  </div>
+  <div class="error-card" id="error-card"></div>
+  <button class="btn-summarize" id="btn-summarize">
+    <div class="spinner" id="spinner"></div>
+    <span id="btn-text">✨ Resumir agora</span>
+  </button>
+  <div class="result-card" id="result-card">
+    <div class="result-header">
+      <div>
+        <div class="result-title">Resumo</div>
+        <div class="result-meta" id="result-meta"></div>
+      </div>
+      <button class="btn-copy" id="btn-copy">Copiar</button>
+    </div>
+    <div id="result-text"></div>
+  </div>
+</main>
+<div class="overlay" id="overlay">
+  <div class="settings-sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-title">⚙️ Configurações</div>
+    <div class="field">
+      <label>Groq API Key</label>
+      <input type="password" id="inp-apikey" placeholder="gsk_xxxxxxxxxxxxxx" autocomplete="off">
+      <div class="hint">Gratuito em <strong>console.groq.com</strong></div>
+      <div class="key-status" id="key-status"></div>
+    </div>
+    <div class="field">
+      <label>Seu nome no grupo</label>
+      <input type="text" id="inp-username" placeholder="Marina Hott">
+      <div class="hint">Usado no filtro "Desde minha última mensagem"</div>
+    </div>
+    <button class="btn-save" id="btn-save">Salvar</button>
+  </div>
+</div>
+<script>
+const store = { get: k => localStorage.getItem(k) || '', set: (k, v) => localStorage.setItem(k, v) };
+const overlay = document.getElementById('overlay');
+const inpApiKey = document.getElementById('inp-apikey');
+const inpUser = document.getElementById('inp-username');
+const keyStatus = document.getElementById('key-status');
+function openSettings() { inpApiKey.value = store.get('groq_key'); inpUser.value = store.get('username') || 'Marina Hott'; overlay.classList.add('open'); }
+function closeSettings() { overlay.classList.remove('open'); }
+document.getElementById('btn-settings').onclick = openSettings;
+overlay.addEventListener('click', e => { if (e.target === overlay) closeSettings(); });
+document.getElementById('btn-save').onclick = () => {
+  const key = inpApiKey.value.trim(); const user = inpUser.value.trim() || 'Marina Hott';
+  store.set('groq_key', key); store.set('username', user);
+  keyStatus.textContent = key ? '✓ Chave salva' : '⚠ Nenhuma chave salva';
+  keyStatus.className = 'key-status ' + (key ? 'ok' : 'err');
+  keyStatus.style.display = 'block';
+  setTimeout(closeSettings, 800);
+};
+const MSG_RE = /^(?:\[)?(\d{1,2}[\/\-\.]\d{1,2}[\/\-\.]\d{2,4})[,\s]+(\d{1,2}:\d{2}(?::\d{2})?(?:\s*[APap][Mm])?)(?:\])?[\s\-–]+(.+?):\s(.+)$/;
+function parseMsgs(text) {
+  const lines = text.split('\n'); const msgs = []; let cur = null;
+  for (const raw of lines) {
+    const line = raw.trim(); if (!line) continue;
+    const m = line.match(MSG_RE);
+    if (m) { if (cur) msgs.push(cur); cur = { date: parseWaDate(m[1], m[2]), name: m[3].trim(), text: m[4].trim() }; }
+    else if (cur) { cur.text += '\n' + line; }
+  }
+  if (cur) msgs.push(cur); return msgs;
+}
+function parseWaDate(datePart, timePart) {
+  try {
+    const sep = datePart.includes('/') ? '/' : datePart.includes('-') ? '-' : '.';
+    const dp = datePart.split(sep).map(Number);
+    let day, mon, yr;
+    if (dp[0] > 12) { [day, mon, yr] = dp; } else if (dp[1] > 12) { [mon, day, yr] = dp; } else { [day, mon, yr] = dp; }
+    if (yr < 100) yr += 2000;
+    let h = 0, min = 0;
+    const tp = timePart.trim(); const isPM = /pm/i.test(tp); const isAM = /am/i.test(tp);
+    const nums = tp.replace(/\s*[APap][Mm]/, '').split(':').map(Number);
+    h = nums[0]; min = nums[1] || 0;
+    if (isPM && h < 12) h += 12; if (isAM && h === 12) h = 0;
+    return new Date(yr, mon - 1, day, h, min);
+  } catch { return null; }
+}
+function applyFilter(msgs, filter) {
+  const user = (store.get('username') || 'Marina Hott').toLowerCase();
+  if (filter === 'since-me') {
+    let last = -1;
+    for (let i = msgs.length - 1; i >= 0; i--) { if (msgs[i].name.toLowerCase().includes(user)) { last = i; break; } }
+    if (last < 0) return msgs;
+    const after = msgs.slice(last + 1); return after.length ? after : msgs;
+  }
+  if (filter === '24h') { const cut = Date.now() - 86400000; const f = msgs.filter(m => m.date && m.date.getTime() >= cut); return f.length ? f : msgs; }
+  if (filter === '7d') { const cut = Date.now() - 604800000; const f = msgs.filter(m => m.date && m.date.getTime() >= cut); return f.length ? f : msgs; }
+  return msgs;
+}
+function compress(msgs) { return msgs.filter(m => m.name && m.text).map(m => `${m.name}: ${m.text.replace(/\n/g, ' ')}`).join('\n'); }
+const CHUNK_TOKENS = 3000;
+function chunk(text) {
+  if (text.length / 4 <= CHUNK_TOKENS) return [text];
+  const lines = text.split('\n'); const chunks = []; let cur = '';
+  for (const line of lines) {
+    const next = cur ? cur + '\n' + line : line;
+    if (next.length / 4 > CHUNK_TOKENS && cur) { chunks.push(cur); cur = line; } else { cur = next; }
+  }
+  if (cur) chunks.push(cur); return chunks;
+}
+async function callGroq(messages) {
+  const key = store.get('groq_key');
+  if (!key) throw new Error('Configure sua Groq API key nas configurações (⚙️)');
+  const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${key}` },
+    body: JSON.stringify({ model: 'llama-3.3-70b-versatile', messages, max_tokens: 1024, temperature: 0.3 }),
+  });
+  if (!res.ok) { const err = await res.json().catch(() => ({})); throw new Error(err.error?.message || `Erro ${res.status} na API Groq`); }
+  const data = await res.json(); return data.choices[0].message.content.trim();
+}
+const CHUNK_PROMPT = c => `Resuma esta conversa de WhatsApp em bullet points curtos em português brasileiro.\n\nRegras:\n- Para grupos de conteúdo (milhas, notícias, tech, mercado financeiro): destaque tópicos principais e o que vale verificar ou ler\n- Para grupos pessoais: destaque convites, combinados, datas marcadas e menções importantes\n- Máximo 10 bullets curtos e diretos\n- Ignore mensagens triviais como "ok", "👍", "kkk", "obrigado" isoladas\n- Use • como marcador de bullet\n\nConversa:\n${c}`;
+const CONSOLIDATE_PROMPT = parts => `Consolide os resumos parciais abaixo em um único resumo final em bullets curtos em português brasileiro. Elimine redundâncias, mantenha apenas os pontos mais relevantes. Use • como marcador.\n\n${parts.map((s, i) => `Parte ${i + 1}:\n${s}`).join('\n\n')}`;
+const $ = id => document.getElementById(id);
+const setProgress = (pct, label) => { $('progress-fill').style.width = pct + '%'; $('progress-label').textContent = label; };
+function setLoading(on) {
+  $('btn-summarize').disabled = on; $('spinner').style.display = on ? 'block' : 'none';
+  $('btn-text').textContent = on ? 'Resumindo…' : '✨ Resumir agora';
+  $('progress-wrap').style.display = on ? 'block' : 'none';
+  if (!on) $('progress-fill').style.width = '0%';
+}
+function showError(msg) { const el = $('error-card'); el.textContent = '⚠ ' + msg; el.style.display = 'block'; setTimeout(() => { el.style.display = 'none'; }, 8000); }
+function showResult(text, meta) { $('result-text').textContent = text; $('result-meta').textContent = meta; $('result-card').style.display = 'block'; $('result-card').scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+let activeFilter = 'since-me';
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.onclick = () => { document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); activeFilter = btn.dataset.filter; updateCount(); };
+});
+const chatInput = $('chat-input');
+chatInput.addEventListener('input', updateCount);
+function updateCount() {
+  const raw = chatInput.value.trim();
+  if (!raw) { $('msg-count').textContent = 'Cole o export acima (WhatsApp → Conversa → Exportar)'; return; }
+  const msgs = parseMsgs(raw);
+  if (!msgs.length) { $('msg-count').textContent = 'Formato não reconhecido — cole o export completo'; return; }
+  const filtered = applyFilter(msgs, activeFilter);
+  const tokens = Math.round(compress(filtered).length / 4);
+  $('msg-count').textContent = `${msgs.length} msgs totais → ${filtered.length} filtradas (~${tokens.toLocaleString()} tokens)`;
+}
+$('btn-summarize').onclick = async () => {
+  const raw = chatInput.value.trim();
+  if (!raw) { showError('Cole o export do WhatsApp antes de resumir.'); return; }
+  $('error-card').style.display = 'none'; $('result-card').style.display = 'none';
+  const msgs = parseMsgs(raw);
+  if (!msgs.length) { showError('Formato não reconhecido. Cole o export completo da conversa.'); return; }
+  const filtered = applyFilter(msgs, activeFilter);
+  if (!filtered.length) { showError('Nenhuma mensagem encontrada para o filtro selecionado.'); return; }
+  const compressed = compress(filtered); const chunks = chunk(compressed);
+  setLoading(true);
+  try {
+    let result;
+    if (chunks.length === 1) {
+      setProgress(30, 'Enviando para o Groq…');
+      result = await callGroq([{ role: 'user', content: CHUNK_PROMPT(chunks[0]) }]);
+      setProgress(100, 'Concluído!');
+    } else {
+      const partials = [];
+      for (let i = 0; i < chunks.length; i++) {
+        setProgress(Math.round((i / (chunks.length + 1)) * 80), `Resumindo parte ${i + 1} de ${chunks.length}…`);
+        const p = await callGroq([{ role: 'user', content: CHUNK_PROMPT(chunks[i]) }]);
+        partials.push(p);
+        if (i < chunks.length - 1) await new Promise(r => setTimeout(r, 800));
+      }
+      setProgress(90, 'Consolidando resumos…');
+      result = await callGroq([{ role: 'user', content: CONSOLIDATE_PROMPT(partials) }]);
+      setProgress(100, 'Concluído!');
+    }
+    const filterLabel = { 'since-me': 'desde sua última mensagem', '24h': 'últimas 24h', '7d': 'últimos 7 dias', 'all': 'todas as mensagens' }[activeFilter];
+    showResult(result, `${filtered.length} msgs • ${filterLabel} • ${chunks.length > 1 ? chunks.length + ' lotes' : '1 lote'}`);
+  } catch (err) { showError(err.message); } finally { setLoading(false); }
+};
+$('btn-copy').onclick = () => { navigator.clipboard.writeText($('result-text').textContent).then(() => { $('btn-copy').textContent = 'Copiado!'; setTimeout(() => { $('btn-copy').textContent = 'Copiar'; }, 2000); }); };
+if ('serviceWorker' in navigator) { navigator.serviceWorker.register('/sw.js').catch(() => {}); }
+if (!store.get('groq_key')) { setTimeout(openSettings, 600); }
+</script>
+</body>
+</html>
