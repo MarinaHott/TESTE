@@ -1,5 +1,5 @@
 const ENDPOINT = 'https://api.groq.com/openai/v1/chat/completions'
-const MODEL = 'llama-3.3-70b-versatile'
+const MODEL = 'llama-3.1-8b-instant'
 
 // Groq free tier: 12k TPM. Each chunk ~1.5k tokens in + ~500 out = ~2k per call.
 // Wait 12s between chunks to safely stay under the per-minute limit.
