@@ -1,22 +1,21 @@
 import { useState, useEffect } from 'react'
 import styles from './App.module.css'
-import { parseMessages, filterMessages, formatForGemini } from './utils/parseWhatsApp'
-import { summarize } from './utils/gemini'
+import { parseMessages, filterMessages, formatForGroq } from './utils/parseWhatsApp'
+import { summarize } from './utils/groq'
 
 const FILTERS = [
-  { value: 'all', label: 'Todas as mensagens' },
   { value: 'since-last', label: 'Desde minha última mensagem' },
   { value: 'last-24h', label: 'Últimas 24 horas' },
   { value: 'last-7d', label: 'Últimos 7 dias' },
 ]
 
 function SettingsScreen({ onSave }) {
-  const [apiKey, setApiKey] = useState(() => localStorage.getItem('gemini_key') || '')
-  const [userName, setUserName] = useState(() => localStorage.getItem('user_name') || '')
+  const [apiKey, setApiKey] = useState(() => localStorage.getItem('groq_key') || '')
+  const [userName, setUserName] = useState(() => localStorage.getItem('user_name') || 'Marina Hott')
 
   function handleSave(e) {
     e.preventDefault()
-    localStorage.setItem('gemini_key', apiKey.trim())
+    localStorage.setItem('groq_key', apiKey.trim())
     localStorage.setItem('user_name', userName.trim())
     onSave()
   }
@@ -31,19 +30,19 @@ function SettingsScreen({ onSave }) {
 
       <form className={styles.form} onSubmit={handleSave}>
         <div className={styles.field}>
-          <label className={styles.label}>Gemini API Key</label>
+          <label className={styles.label}>Groq API Key</label>
           <input
             className={styles.input}
             type="password"
-            placeholder="AIza..."
+            placeholder="gsk_..."
             value={apiKey}
             onChange={(e) => setApiKey(e.target.value)}
             required
           />
           <span className={styles.hint}>
-            Obtenha em{' '}
-            <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noreferrer">
-              Google AI Studio
+            Gratuito em{' '}
+            <a href="https://console.groq.com/keys" target="_blank" rel="noreferrer">
+              console.groq.com
             </a>
           </span>
         </div>
@@ -71,11 +70,12 @@ function SettingsScreen({ onSave }) {
 
 function MainScreen({ onSettings }) {
   const [file, setFile] = useState(null)
-  const [filter, setFilter] = useState('all')
+  const [filter, setFilter] = useState('since-last')
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState('')
   const [error, setError] = useState('')
   const [msgCount, setMsgCount] = useState(null)
+  const [chunked, setChunked] = useState(false)
 
   async function handleSummarize() {
     if (!file) return
@@ -83,13 +83,13 @@ function MainScreen({ onSettings }) {
     setResult('')
     setLoading(true)
     setMsgCount(null)
+    setChunked(false)
 
     try {
       const text = await file.text()
-      const apiKey = localStorage.getItem('gemini_key')
-      const userName = localStorage.getItem('user_name') || ''
+      const apiKey = localStorage.getItem('groq_key')
+      const userName = localStorage.getItem('user_name') || 'Marina Hott'
 
-      const MAX_MSGS = 300
       const messages = parseMessages(text)
       const filtered = filterMessages(messages, filter, userName)
 
@@ -99,9 +99,11 @@ function MainScreen({ onSettings }) {
         return
       }
 
-      const trimmed = filtered.slice(-MAX_MSGS)
-      setMsgCount(trimmed.length)
-      const conversation = formatForGemini(trimmed)
+      setMsgCount(filtered.length)
+      const conversation = formatForGroq(filtered)
+      const estimatedTokens = Math.ceil(conversation.length / 4)
+      if (estimatedTokens > 3000) setChunked(true)
+
       const summary = await summarize(apiKey, conversation)
       setResult(summary)
     } catch (err) {
@@ -120,8 +122,8 @@ function MainScreen({ onSettings }) {
         const html = line.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
         return <p key={i} className={styles.resultLine} dangerouslySetInnerHTML={{ __html: html }} />
       }
-      if (line.startsWith('- ') || line.startsWith('• ')) {
-        return <p key={i} className={styles.resultBullet}>{line}</p>
+      if (line.startsWith('- ') || line.startsWith('• ') || line.startsWith('* ')) {
+        return <p key={i} className={styles.resultBullet}>{line.replace(/^\* /, '• ')}</p>
       }
       if (line.trim() === '') return <br key={i} />
       return <p key={i} className={styles.resultLine}>{line}</p>
@@ -178,12 +180,15 @@ function MainScreen({ onSettings }) {
           disabled={!file || loading}
         >
           {loading
-            ? <span className={styles.loadingRow}><span className={styles.spinner} /> Resumindo...</span>
+            ? <span className={styles.loadingRow}><span className={styles.spinner} /> {chunked ? 'Resumindo em partes...' : 'Resumindo...'}</span>
             : '✨ Resumir conversa'}
         </button>
 
         {msgCount !== null && !error && (
-          <p className={styles.msgCount}>{msgCount} mensagens analisadas</p>
+          <p className={styles.msgCount}>
+            {msgCount} mensagens analisadas
+            {chunked && ' · processado em partes'}
+          </p>
         )}
 
         {error && <div className={styles.errorBox}>{error}</div>}
@@ -211,7 +216,7 @@ export default function App() {
   const [screen, setScreen] = useState('main')
 
   useEffect(() => {
-    const key = localStorage.getItem('gemini_key')
+    const key = localStorage.getItem('groq_key')
     const name = localStorage.getItem('user_name')
     if (!key || !name) setScreen('settings')
   }, [])
